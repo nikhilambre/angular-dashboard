@@ -1,0 +1,37 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set">
+          <div class="box-head">
+              <h4>Enquiry Details</h4>
+          </div>
+
+          <div class="inbox row">
+
+            <dl class="dl-horizontal" *ngFor="let enq of enquiry">
+
+              <dt>Name :</dt>
+                <dd>{{ enq.messageName | titlecase }}</dd>
+              <dt>Contact No :</dt>
+                <dd>{{ enq.messageContact }}</dd>
+              <dt>For Product :</dt>
+                <dd>{{ enq.enquiryProduct }}</dd>
+              <dt>Email Address :</dt>
+                <dd>{{ enq.messageEmail }}<span class="pull-right">Received Date : {{ enq.created_at }}</span></dd>
+              <dt></dt><dd><hr></dd>
+              <dt>Enquiry Message : </dt>
+                <dd>{{ enq.enquiryText }}</dd>
+            </dl>
+              
+          </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

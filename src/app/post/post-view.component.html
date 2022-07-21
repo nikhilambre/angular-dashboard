@@ -1,0 +1,54 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Post Details</h4>
+        </div>
+
+        <div class="show row" *ngFor="let pos of post">
+          
+            <div class="show-top row">
+              <a routerLink="/post" class="btn btn-primary">View All</a>
+              <a routerLink="/post/create" class="btn btn-primary">Add New</a>
+              <a routerLink="/post/edit/{{ pos.id }}" class="btn btn-primary">Edit</a>           
+            </div>
+  
+            <div class="show-left col-xs-12 col-sm-12 col-md-10">
+              <div><h5>Post Description</h5></div>
+              <dl class="dl-horizontal post-show">
+                <dt>Post Title :</dt><dd>{{ pos.postTitle }}</dd>
+                <dt>Category :</dt><dd>{{ pos.categoryName }}</dd>
+                <dt>Author :</dt><dd>{{ pos.authorName }}</dd>
+                <dt>Approx. time to Read :</dt><dd>{{ pos.readMinutes }}</dd>
+                <dt>Status :</dt><dd>{{ pos.postStatus }}</dd>
+  
+                <ng-container *ngIf="pos.postRank == 1"><dt>Rank :</dt><dd>Always On Top</dd></ng-container>
+                <ng-container *ngIf="pos.postRank == 2"><dt>Rank :</dt><dd>Most Imprortant</dd></ng-container>
+                <ng-container *ngIf="pos.postRank == 3"><dt>Rank :</dt><dd>Very Imprortant</dd></ng-container>
+                <ng-container *ngIf="pos.postRank == 4"><dt>Rank :</dt><dd>Imprortant</dd></ng-container>
+                <ng-container *ngIf="pos.postRank == 5"><dt>Rank :</dt><dd>Less Important</dd></ng-container>
+  
+                <dt>Comment Status :</dt><dd>{{ pos.commentStatus }}</dd>
+                <dt>Comment Count :</dt><dd>{{ pos.commentCount }}</dd>
+                <dt>View :</dt><dd>{{ pos.view }}</dd>
+                <dt>Created Date :</dt><dd>{{ pos.created_at }}</dd>
+                <dt>Post Content :</dt><dd innerHTML="{{ pos.postContent }}"></dd>
+              </dl>
+            </div>
+  
+            <div class="show-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            </div>
+  
+          </div>
+
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>
+    

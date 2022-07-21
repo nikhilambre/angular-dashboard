@@ -1,0 +1,31 @@
+<div class="set">
+    <div class="box-head">
+        <h4>Address List</h4>
+    </div>
+
+    <div class="list row">
+
+      <div class="addr-record">
+        <div *ngFor="let adr of address">
+          <address>
+            <strong>{{ adr.addressHead }}</strong><br>
+            {{ adr.addressBody }} <br>
+            <abbr title="Phone">Phone: </abbr>{{ adr.addressNumber }}<br>
+          </address>
+          <address>
+            <span>{{ adr.addressName }}</span><br>
+            <a href="mailto:{{ adr.addressEmail }}">{{ adr.addressEmail }}</a><br>
+            {{ adr.addressLine1 }}<br>
+            {{ adr.addressLine2 }}<br>
+            {{ adr.addressLine3 }}<br>
+            {{ adr.addressLine4 }}<br>
+          </address>
+
+            <a routerLink="/contact/address/edit/{{ adr.id }}" class="btn btn-default">Edit</a>
+            <button (click)="onDelete(adr)" class="btn btn-default">Delete</button>
+            <br><hr><br>
+        </div>
+      </div>
+
+    </div>
+</div>

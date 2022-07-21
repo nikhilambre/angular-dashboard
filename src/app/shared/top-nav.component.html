@@ -1,0 +1,14 @@
+<nav class="navbar navbar-static-top" role="navigation">
+  <div class="nav-header navbar-left">
+    <span class="nav-minmize btn btn-primary hidden-xs"><i class="fa fa-area-chart"></i ></span>
+    <span class="nav-minmize btn btn-primary visible-xs pull-right" (click)="showSideBar()"><i class="fa fa-bars"></i ></span>
+    <h1 class="nav-brand">WebCraft Shop</h1>
+  </div>
+
+  <ul class="nav navbar-top-links navbar-right hidden-xs" *ngFor="let pageHeader of pageHeaders">
+    <!-- <a routerLink="/visitor-input/messages" class="icons" title="New Messages"><span class="badge">7</span><i class="fa fa-envelope"></i></a>
+    <a routerLink="/comment" class="icons" title="New Commnets"><span class="badge">2</span><i class="fa fa-comments"></i></a> -->
+    <a routerLink="/post" *ngIf="pageHeader.header == 'Dashboard'" class="btn btn-default">Switch to Content</a>
+    <a (click)="onLogout()" class="btn btn-default"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Log Out</a>
+  </ul>
+</nav>

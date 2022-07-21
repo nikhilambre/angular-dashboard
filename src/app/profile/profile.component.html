@@ -1,0 +1,39 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Profile Details</h4>
+        </div>
+
+        <div class="show row" *ngFor="let prf of profile">
+          
+          <div class="show-full col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <dl class="dl-horizontal" >
+              <dt>First Name :</dt><dd><strong>{{ prf.firstname }}</strong></dd>
+              <dt>Last Name :</dt><dd>{{ prf.lastname }}</dd>
+              <dt>Username :</dt><dd>{{ prf.username }}</dd>
+              <dt>Email :</dt><dd>{{ prf.email }}</dd>
+              <dt>Created Date :</dt><dd>/{{ prf.created_at }}</dd>
+            </dl>
+            <br><hr>
+
+            <div class="">
+              <a routerLink="/profile/edit" class="btn btn-primary">Edit Profile</a>
+              <a routerLink="/profile/edit" class="btn btn-primary">Change Password</a>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  <app-footer></app-footer>
+</div>

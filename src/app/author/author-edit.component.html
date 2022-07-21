@@ -1,0 +1,124 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+    <app-processing [process]="process"></app-processing>
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Add Author</h4>
+          </div>
+          <form class="edit row" enctype="multipart/form-data" (ngSubmit)="onUpdate(authorForm.value)" #authorForm="ngForm" *ngFor="let aut of author">
+
+            <div class="form-group row hidden">
+              <label for="exampleInputEmail1" class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <input type="hidden" class="form-control" name="id" #id="ngModel" [(ngModel)]="aut.id">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': authorName.touched && !authorName.valid}">
+              <label for="authorName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Author Name: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="authorName" placeholder="Category Name"
+                        name="authorName" #authorName="ngModel" [(ngModel)]="aut.authorName"
+                        maxlength="100" required>
+
+                    <div class="pull-right" *ngIf="authorName.touched && !authorName.valid">
+                        <p *ngIf="authorName.errors.required" class="text-danger">Author Name field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': authorDetails.touched && !authorDetails.valid}">
+              <label for="authorDetails" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Author Details: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea
+                        type="textarea" class="form-control" id="authorDetails" rows="6" placeholder="Author Details (Max 800 characters)"
+                        name="authorDetails" #authorDetails="ngModel" [(ngModel)]="aut.authorDetails" 
+                        maxlength="800" required></textarea>
+
+                  <div class="pull-right " *ngIf="authorDetails.touched && !authorDetails.valid">
+                    <p *ngIf="authorDetails.errors.required" class="text-danger">Author Details field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': authorProfession.touched && !authorProfession.valid}">
+              <label for="authorProfession" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Author Profession: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="authorProfession" placeholder="Author Profession"
+                        name="authorProfession" #authorProfession="ngModel" [(ngModel)]="aut.authorProfession"
+                        maxlength="100" required>
+
+                    <div class="pull-right" *ngIf="authorProfession.touched && !authorProfession.valid">
+                        <p *ngIf="authorProfession.errors.required" class="text-danger">Author Profession field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': authorAge.touched && !authorAge.valid}">
+              <label for="authorAge" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Author Age: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="number" class="form-control" id="authorAge" placeholder="Author Age"
+                        name="authorAge" #authorAge="ngModel" [(ngModel)]="aut.authorAge"
+                        max="150" required>
+
+                    <div class="pull-right" *ngIf="authorAge.touched && !authorAge.valid">
+                        <p *ngIf="authorAge.errors.required" class="text-danger">Author Age field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="authorEducation" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Author Education: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="authorEducation" placeholder="Author Education"
+                        name="authorEducation" #authorEducation="ngModel" [(ngModel)]="aut.authorEducation"
+                        maxlength="150">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="authorImage" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Profile Image: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                      type="file" class=""  id="authorImage" 
+                      name="authorImage" #authorImage="ngModel" ngModel accept="image/*">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': authorDescription.touched && !authorDescription.valid}">
+                <label for="authorDescription" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Author Details: </label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+
+                    <app-text-editor [elementId]="'blog-post'" (onEditorKeyup)="tinymcyFunction($event)" [contentFromDB]="contentFromDB"></app-text-editor>
+                    <textarea
+                      type="textarea" class="form-control" id="authorDescription" rows="6" placeholder="Author Description (Max 800 characters)"
+                      name="authorDescription" #authorDescription="ngModel" [(ngModel)]="tinymcyContent" 
+                      maxlength="10000" required>{{ tinymcyContent }}</textarea>
+                    <p class="pull-right">Max 10000 words only</p>
+                </div>
+              </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" class="btn btn-default" value="Save" contenteditable="false" [disabled]="!authorForm.valid">
+                <a routerLink="/author" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,48 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+    <div class="dash-wrap row">
+        <app-processing [process]="process"></app-processing>
+
+        <div class="set">
+            <div class="box-head">
+                <h4>Users List</h4>
+            </div>
+            <div class="list row">
+                <div class="">
+                    <a routerLink="/admin/create" class="btn btn-primary">Add New</a>
+                </div><br><br>
+
+              <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+                  <thead> 
+                      <tr> 
+                          <th>#</th> 
+                          <th>Name</th>
+                          <th>User Name</th>
+                          <th>Email</th>
+                          <th>Created Date</th>
+                          <th>Delete</th>
+                      </tr> 
+                  </thead> 
+                  <tbody> 
+                      <tr class="msg-record" *ngFor="let adm of admin">
+                          <td>1</td>
+                          <td>{{ adm.firstname +' '+ adm.lastname }}</td>
+                          <td>{{ adm.username }}</td>
+                          <td>{{ adm.email }}</td>
+                          <td>{{ adm.created_at | date:'short' }}</td>
+                          <td><button (click)="onDelete(adm)" class="btn btn-default">Delete</button></td>
+                      </tr>
+                  </tbody> 
+              </table></div>
+          </div>
+      </div>
+
+
+
+    </div>
+  <app-footer></app-footer>
+</div>

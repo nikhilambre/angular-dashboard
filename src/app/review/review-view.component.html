@@ -1,0 +1,91 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Review Details</h4>
+        </div>
+
+        <div class="show row" *ngFor="let rev of review">
+
+          <div class="show-left col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Review Description</h5></div>
+            <dl class="dl-horizontal">
+              <dt>Review for Product :</dt><dd><a routerLink="/product/view/{{ rev.productId }}">{{ rev.productName }}</a></dd>
+              <dt>Reviewed By :</dt><dd><a routerLink="/visitor/view/{{ rev.customerId }}">{{ rev.name }} {{ rev.lastname }}</a></dd>
+              <dt>Review Date :</dt><dd>{{ rev.created_at | date:'short' }}</dd>
+              <dt>Ratings :</dt><dd>{{ rev.rating }}</dd>
+              <dt>Review :</dt><dd>{{ rev.reviewContent }}</dd><br><br>
+              <dt>Reply by Admin:</dt><dd>{{ reply }}</dd>
+            </dl>
+          </div>
+
+          <div class="show-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Review Reply</h5></div>
+            <form class="create row" (ngSubmit)="onCreate(replyForm.value)" #replyForm="ngForm">
+              
+              <div class="form-group row hidden">
+                <label for="productId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">productId</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="productId" #productId="ngModel" [(ngModel)]="rev.productId">
+                </div>
+              </div>
+              <br>
+
+              <div class="form-group row hidden">
+                <label for="customerId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">customerId</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="customerId" #customerId="ngModel" [(ngModel)]="rev.customerId">
+                </div>
+              </div>
+
+              <div class="form-group row hidden">
+                <label for="reviewParentId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">reviewParentId</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="reviewParentId" #reviewParentId="ngModel" [(ngModel)]="rev.id">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-xs-12 col-sm-3 col-md-3 col-lg-3">Replying As: </label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <p>Site Admin</p>
+                </div>
+              </div>
+
+              <div class="form-group row" [ngClass]="{'has-error': reviewContent.touched && !reviewContent.valid}">
+                <label for="reviewContent" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Admin Reply: </label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <textarea 
+                        class="form-control" rows="4" id="reviewContent"  placeholder="Reply Text Here"
+                        ngModel name="reviewContent" #reviewContent="ngModel" 
+                        maxlength="2000" required></textarea>
+  
+                    <div class="pull-right " *ngIf="reviewContent.touched && !reviewContent.valid">
+                      <p *ngIf="reviewContent.errors.required" class="text-danger">Reply field is required</p>
+                    </div>
+                </div>
+              </div>
+
+              <label class="col-xs-12 col-sm-3 col-md-3 col-lg-3">&nbsp;</label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                  <hr>
+                  <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false" [disabled]="!replyForm.valid" />
+                  <a routerLink="/review" class="btn btn-primary">Back to List</a>
+              </div>
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>
+    

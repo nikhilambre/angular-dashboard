@@ -1,0 +1,65 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+
+    <div class="dash-wrap row">
+
+      <div class="create row" >
+        <div class="set">
+          <div class="box-head">
+            <h4>Cart Status Update</h4>
+          </div>
+
+          <form class="edit row" (ngSubmit)="onUpdate(cartForm.value)" #cartForm="ngForm" *ngFor="let car of cart">
+
+            <div class="form-group row hidden">
+              <label for="id" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Id: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <input type="hidden" class="form-control" id="id" name="id" #id="ngModel" [(ngModel)]="car.id" maxlength="50" required>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="status" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Cart Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select name="status" #status="ngModel" [(ngModel)]="car.status" class="form-control">
+                  <option value="PURCHASED">Purchased</option>
+                  <option value="DELIVERED">Delivered</option>
+                  <option value="RETURN">Return</option>
+                  <option value="REPLACED">Replaced</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="deliveryStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Delivery Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select name="deliveryStatus" #deliveryStatus="ngModel" [(ngModel)]="car.deliveryStatus" class="form-control">
+                  <option value="ORDERED">Ordered</option>
+                  <option value="PACKED">Packed</option>
+                  <option value="SHIPPED">Shipped</option>
+                  <option value="DISPATCHED">Dispatched</option>
+                  <option value="DELIVERED">Delivered</option>
+                  <option value="RETURN REQUESTED">Return Requested</option>
+                  <option value="RETURN PICKED UP">Return Picked Up</option>
+                  <option value="RETURNED">Returned</option>
+                </select>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false"  [disabled]="!cartForm.valid">
+                <a routerLink="/order" class="btn btn-primary">Back to Orders</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  <app-footer></app-footer>
+</div>

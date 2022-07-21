@@ -1,0 +1,24 @@
+<div class="home-wrap"><div class="container-fluid">
+
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+  <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+  <div class="chart-wrap row">
+    <div class="col-left col-xs-12 col-sm-9 col-md-9 col-lg-9">
+      <app-home-one></app-home-one>
+      <app-home-three></app-home-three>
+      
+    </div>
+    <div class="col-both col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <app-home-two></app-home-two>
+
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div></div>
+
+
+
+
+

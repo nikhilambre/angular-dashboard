@@ -1,0 +1,21 @@
+<div class="set">
+  <div class="box-head">
+    <h4>Social Link List</h4>
+  </div>
+  <div class="list row" *ngFor="let soc of social">
+
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-{{ soc.socialName }}"></i>&nbsp; {{ soc.socialName }}</h3>
+        <div class="panel-icon pull-right">
+          <a routerLink="/contact/social/edit/{{ soc.id }}" class="btn btn-default">Edit</a>
+          <button (click)="onDelete(soc)" class="btn btn-default">Delete</button>
+        </div>
+      </div>
+
+      <div class="panel-body">{{ soc.socialLink }}</div>
+    </div>
+
+  </div>
+</div>

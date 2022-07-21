@@ -1,0 +1,44 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+
+    <div class="dash-wrap row">
+
+        <div class="set">
+            <div class="box-head">
+                <h4>Affiliates Lead List</h4>
+            </div>
+            <div class="list row">
+                <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+                    <thead> 
+                        <tr> 
+                            <th>#</th> 
+                            <th>Order Code</th>
+                            <th>Affiliate Name</th>
+                            <th>Order Status</th>
+                            <th>Affiliate Billing</th>
+                            <th>Affiliate Share</th>
+                            <th>Update</th>
+                        </tr> 
+                    </thead> 
+                    <tbody> 
+                        <tr class="msg-record" *ngFor="let afi of affiliatelead; let i=index">
+                            <td>{{ i+1 }}</td>
+                            <td><a routerLink='/order/view/{{ afi.orderId }}' class="">{{ afi.orderCode }}</a></td>
+                            <td><a routerLink='/affiliate/view/{{ afi.affiliateId }}' class="">{{ afi.name | titlecase }} {{ afi.lastname | titlecase }}</a></td>
+                            <td>{{ afi.orderStatus }}</td>
+                            <td>{{ afi.affiliateBillingStatus }}</td>
+                            <td>{{ afi.affiliatePaid }}</td>
+                            <td><a routerLink='/order-detail/{{ afi.id }}' class=""><i class="fa fa-edit"></i></a></td>
+                        </tr>
+                    </tbody> 
+                </table></div>
+            </div>
+        </div>
+    </div>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,41 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Likes</h4>
+        </div>
+
+        <div class="list row">
+            <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+                <thead> 
+                    <tr> 
+                        <th>#</th> 
+                        <th>Added By</th>
+                        <th>Post</th>
+                        <th>Like/Dislike</th>
+                        <th>Created</th>
+                    </tr> 
+                </thead> 
+                <tbody> 
+                    <tr class="msg-record" *ngFor="let lik of like; let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td><a routerLink='/visitor/view/{{ lik.customerId }}'>{{ lik.name | slice:0:50 }}</a></td>
+                        <td><a routerLink='/post/view/{{ lik.postId }}'>{{ lik.postTitle | slice:0:25 }}</a></td>
+                        <td>{{ lik.likeType }}</td>
+                        <td>{{ lik.created_at | date:'short' }}</td>
+                    </tr>
+                </tbody> 
+            </table></div>
+        </div>
+
+
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>

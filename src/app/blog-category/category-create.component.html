@@ -1,0 +1,63 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+  <app-processing [process]="process"></app-processing>
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Add Category</h4>
+          </div>
+          <form class="edit row" enctype="multipart/form-data" (ngSubmit)="onCreate(categoryForm.value)" #categoryForm="ngForm">
+
+            <div class="form-group row" [ngClass]="{'has-error': categoryName.touched && !categoryName.valid}">
+              <label for="categoryName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Category Name: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="categoryName" placeholder="Category Name"
+                        name="categoryName" #categoryName="ngModel" ngModel
+                        maxlength="60" required>
+
+                    <div class="pull-right" *ngIf="categoryName.touched && !categoryName.valid">
+                        <p *ngIf="categoryName.errors.required" class="text-danger">Category Name field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <!-- <div class="form-group row" [ngClass]="">
+              <label for="categoryRank" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Category Tag: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <input
+                        type="text" class="form-control" id="categoryRank" rows="6" placeholder="Category Tag"
+                        name="categoryRank" #categoryRank="ngModel" ngModel 
+                        maxlength="20" >
+              </div>
+            </div> -->
+
+            <div class="form-group row">
+              <label for="categoryStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Status</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select [(ngModel)]="defaultStatus" class="form-control" id="categoryStatus" name="categoryStatus" #categoryStatus="ngModel" required>
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                    </select>
+                </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" class="btn btn-default" value="Save" contenteditable="false" [disabled]="!categoryForm.valid">
+                <a routerLink="/blog-category" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

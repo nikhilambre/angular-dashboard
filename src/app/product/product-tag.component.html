@@ -1,0 +1,62 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <div class="dash-wrap row">
+
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="padding: 0;">
+        <app-product-tag-create></app-product-tag-create>
+        <app-product-tag-list></app-product-tag-list>
+      </div>
+
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+
+        <div class="create row">
+          <div class="set">
+            <div class="box-head">
+              <h4>Add Tags to Product</h4>
+            </div>
+        
+            <form class="edit row" (ngSubmit)="onCreate(taglistForm.value)" #taglistForm="ngForm" >
+        
+              <div class="form-group row" [ngClass]="{'has-error': productId.touched && !productId.valid}">
+                <label for="productId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Product: </label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <select class="form-control" id="productId" name="productId" #productId="ngModel" ngModel (change)="onProductChange(productId.value)" required>
+                      <option value="">--</option>
+                      <option value="{{ prd.id }}" *ngFor="let prd of product">{{ prd.productName }}</option>
+                    </select>
+
+                    <div class="pull-right " *ngIf="productId.touched && !productId.valid">
+                        <p *ngIf="productId.errors.required" class="text-danger">Product Name field is required</p>
+                    </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <div class="check" *ngFor="let t of producttag">
+                      <input type="checkbox" id="tagmap-{{ t.id }}" name="tagId[]" value="{{ t.id }}" (change)="onCheckBox(t.id, $event)" [attr.checked]="isChecked[t.id] ? 'true' : null">
+                      <label for="tagmap-{{ t.id }}"></label>
+                      <span>{{ t.tagName }}</span>
+                  </div>
+                </div>
+              </div>
+        
+              <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                  <input type="submit" name="submit" class="btn btn-default" value="Update Tags" contenteditable="false" [disabled]="!taglistForm.valid">
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  <app-footer></app-footer>
+</div>
+      

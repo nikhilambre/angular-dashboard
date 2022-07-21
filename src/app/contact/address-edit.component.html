@@ -1,0 +1,149 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+
+    <div class="dash-wrap row">
+
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="padding: 0;">
+        <div class="set">
+            <div class="box-head">
+                <h4>Edit Address</h4>
+            </div>
+            <form class="edit row" (ngSubmit)="onUpdate(AddressForm.value)" #AddressForm="ngForm" *ngFor="let adr of address">
+
+              <div class="form-group row hidden">
+                <label for="id" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Name: </label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" id="id" name="id" #id="ngModel" [(ngModel)]="adr.id" maxlength="50" required>
+                </div>
+              </div>
+
+                <div class="form-group row" [ngClass]="{'has-error': addressHead.touched && !addressHead.valid}">
+                  <label for="addressHead" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Address head: </label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                      <input 
+                          type="text" class="form-control" id="addressHead" placeholder="Branch Name/Title"
+                          [(ngModel)]="adr.addressHead" name="addressHead" #addressHead="ngModel" 
+                          maxlength="40" required>
+
+                      <div class="pull-right " *ngIf="addressHead.touched && !addressHead.valid">
+                        <p *ngIf="addressHead.errors.required" class="text-danger">Address Head field is required</p>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="form-group row" [ngClass]="{'has-error': addressBody.touched && !addressBody.valid}">
+                  <label for="addressBody" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Address: </label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                      <textarea 
+                          type="textarea" class="form-control" id="addressBody" placeholder="Address"
+                          [(ngModel)]="adr.addressBody" name="addressBody" #addressBody="ngModel" rows="3" 
+                          maxlength="400" required></textarea>
+
+                      <div class="pull-right " *ngIf="addressBody.touched && !addressBody.valid">
+                         <p *ngIf="addressBody.errors.required" class="text-danger">Address field is required</p>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="form-group row" [ngClass]="{'has-error': addressNumber.touched && !addressNumber.valid}">
+                  <label for="addressNumber" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Contact no.: </label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                      <input 
+                          type="text" class="form-control" id="addressNumber" placeholder="+919876543210"
+                          [(ngModel)]="adr.addressNumber" name="addressNumber" #addressNumber="ngModel" 
+                          maxlength="20" required pattern="^\+?\d{0,15}">
+
+                      <div class="pull-right " *ngIf="addressNumber.touched && !addressNumber.valid">
+                          <p *ngIf="addressNumber.errors.required" class="text-danger">Phone number field is required</p>
+                          <p *ngIf="addressNumber.errors.pattern" class="text-danger">Only numbers are allowed</p>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="form-group row" [ngClass]="{'has-error': addressName.touched && !addressName.valid}">
+                  <label for="addressName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Person Name: </label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                      <input 
+                          type="text" class="form-control" id="addressName" placeholder="Person Name"
+                          [(ngModel)]="adr.addressName" name="addressName" #addressName="ngModel" 
+                          maxlength="60" required>
+
+                      <div class="pull-right " *ngIf="addressName.touched && !addressName.valid">
+                          <p *ngIf="addressName.errors.required" class="text-danger">Person Name field is required</p>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="form-group row" [ngClass]="{'has-error': addressEmail.touched && !addressEmail.valid}">
+                  <label for="addressEmail" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Email Addess: </label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                      <input 
+                          type="email" class="form-control" id="addressEmail" placeholder="Email address"
+                          [(ngModel)]="adr.addressEmail" name="addressEmail" #addressEmail="ngModel"  
+                          maxlength="100" required>
+
+                      <div class="pull-right " *ngIf="addressEmail.touched && !addressEmail.valid">
+                          <p *ngIf="addressEmail.errors.required" class="text-danger">Email address field is required</p>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="addressLine1" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Other Line 1: </label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                      <input 
+                          type="text" class="form-control" id="addressLine1" placeholder="Other Online Profile"
+                          [(ngModel)]="adr.addressLine1" name="addressLine1" #addressLine1="ngModel" 
+                          maxlength="80">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="addressLine2" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Other Line 2: </label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                      <input 
+                          type="text" class="form-control" id="addressLine2" placeholder="Other Online Profile"
+                          [(ngModel)]="adr.addressLine2" name="addressLine2" #addressLine2="ngModel" 
+                          maxlength="80">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="addressLine3" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Other Line 3: </label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                      <input 
+                          type="text" class="form-control" id="addressLine3" placeholder="Other Online Profile"
+                          [(ngModel)]="adr.addressLine3" name="addressLine3" #addressLine3="ngModel"  
+                          maxlength="80">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="addressLine4" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Other Line 4: </label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                      <input 
+                          type="text" class="form-control" id="addressLine4" placeholder="Other Online Profile"
+                          [(ngModel)]="adr.addressLine4" name="addressLine4" #addressLine4="ngModel" 
+                          maxlength="80">
+                  </div>
+                </div>
+
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <hr>
+                    <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false" [disabled]="!AddressForm.valid">
+                    <a routerLink="/contact/address" class="btn btn-primary">Back to List</a>
+                </div>
+            </form>
+        </div>
+
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

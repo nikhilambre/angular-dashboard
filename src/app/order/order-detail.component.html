@@ -1,0 +1,108 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Order Details</h4>
+        </div>
+        <app-order-tabs [linkId]="linkId"></app-order-tabs>
+        <hr>
+
+        <div class="" *ngFor="let ord of order">
+
+          <div class="grid2 col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="grid-left">orderCode:</div>
+              <div class="grid-right">{{ ord.orderCode }}</div>
+    
+              <div class="grid-left">Person's Name:</div>
+              <div class="grid-right">{{ ord.orderName }}</div>
+
+              <div class="grid-left">Organisation's Name:</div>
+              <div class="grid-right">{{ ord.orderOrgName }}</div>
+    
+              <div class="grid-left">customer's Id:</div>
+              <div class="grid-right">{{ ord.customerId }}</div>
+
+              <div class="grid-left">Order's Email:</div>
+              <div class="grid-right">{{ ord.orderEmail }}</div>
+    
+              <div class="grid-left">Contact No:</div>
+              <div class="grid-right">{{ ord.orderContactNo }}</div>
+
+              <div class="grid-left">Currency:</div>
+              <div class="grid-right">{{ ord.orderCurrency }}</div>
+
+              <div class="grid-left">Order's Cost:</div>
+              <div class="grid-right">{{ ord.orderCost }}</div>
+    
+              <div class="grid-left">product Id:</div>
+              <div class="grid-right">{{ ord.productId }}</div>
+
+              <div class="grid-left">product Code:</div>
+              <div class="grid-right">{{ ord.productCode }}</div>
+
+              <div class="grid-left">Order Data 1:</div>
+              <div class="grid-right">{{ ord.orderData1 }}</div>
+
+              <div class="grid-left">Order Data 2:</div>
+              <div class="grid-right">{{ ord.orderData2 }}</div>
+    
+              <div class="grid-left">Order Data 3:</div>
+              <div class="grid-right">{{ ord.orderData3 }}</div>
+
+              <div class="grid-left">Order Data 4:</div>
+              <div class="grid-right">{{ ord.orderData4 }}</div>
+            </div>
+            <div class="grid2 col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+                <div class="grid-left">Description:</div>
+                <div class="grid-right">{{ ord.orderDescription }}</div>
+
+                <div class="grid-left">Order Status:</div>
+                <div class="grid-right">{{ ord.orderStatus }}</div>
+      
+                <div class="grid-left">Billing Status:</div>
+                <div class="grid-right">{{ ord.billingStatus }}</div>
+
+                <div class="grid-left">Delivery Status:</div>
+                <div class="grid-right">{{ ord.deliveryStatus }}</div>
+      
+                <div class="grid-left">Order Terms:</div>
+                <div class="grid-right">{{ ord.orderTerms }}</div>
+            
+                <div class="grid-left">Cancelled_on:</div>
+                <div class="grid-right">{{ ord.cancelled_on }}</div>
+      
+                <div class="grid-left">Dispatch_on:</div>
+                <div class="grid-right">{{ ord.dispatch_on }}</div>
+
+                <div class="grid-left">Delivered_on:</div>
+                <div class="grid-right">{{ ord.delivered_on }}</div>
+      
+                <div class="grid-left">Completed_on:</div>
+                <div class="grid-right">{{ ord.completed_on }}</div>
+
+                <div class="grid-left">Replace_on:</div>
+                <div class="grid-right">{{ ord.replace_on }}</div>
+      
+                <div class="grid-left">Refund_on:</div>
+                <div class="grid-right">{{ ord.refund_on }}</div>
+            
+                <div class="grid-left">Updated_at:</div>
+                <div class="grid-right">{{ ord.updated_at }}</div>
+      
+                <div class="grid-left">Created_at:</div>
+                <div class="grid-right">{{ ord.created_at }}</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>

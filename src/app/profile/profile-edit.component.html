@@ -1,0 +1,103 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+
+    <div class="dash-wrap row">
+
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+        <div class="set">
+          <div class="box-head">
+              <h4>Edit Profile</h4>
+          </div>
+
+          <form class="edit row" (ngSubmit)="onUpdate(profileForm.value)" #profileForm="ngForm" *ngFor="let prf of profile">
+              
+            <div class="show-processing" *ngIf="processing == false">Processing...</div>
+
+            <div class="form-group row hidden">
+                <label for="id" class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" id="id" name="id" #id="ngModel" [(ngModel)]="prf.id" required>
+                </div>
+            </div>
+
+            <div class="form-group row " [ngClass]="{'has-error': firstname.touched && !firstname.valid}">
+                <label for="firstname" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">*First Name: </label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <input 
+                        type="text" class="form-control" id="firstname" placeholder="User's First Name"
+                        name="firstname" #firstname="ngModel" [(ngModel)]="prf.firstname"
+                        maxlength="60" required>
+
+                    <div class="pull-right " *ngIf="firstname.touched && !firstname.valid">
+                        <p *ngIf="firstname.errors.required" class="text-danger">First Name field is required</p>
+                    </div>
+                </div>
+            </div>
+      
+            <div class="form-group row" [ngClass]="{'has-error': lastname.touched && !lastname.valid}">
+                <label for="lastname" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">*Last Name: </label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <input 
+                        type="text" class="form-control" id="lastname" placeholder="User's Last Name"
+                        name="lastname" #lastname="ngModel" [(ngModel)]="prf.lastname" 
+                        maxlength="60" required>
+
+                    <div class="pull-right " *ngIf="firstname.touched && !firstname.valid">
+                        <p *ngIf="firstname.errors.required" class="text-danger">Last Name field is required</p>
+                    </div>
+                </div>
+            </div>
+      
+            <div class="form-group row" [ngClass]="{'has-error': username.touched && !username.valid}">
+                <label for="username" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* User Id: </label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <input 
+                        type="text" class="form-control" id="username" placeholder="Username for Login " 
+                        name="username" #username="ngModel" [(ngModel)]="prf.username" 
+                        maxlength="20" required>
+
+                    <div class="pull-right " *ngIf="username.touched && !username.valid">
+                        <p *ngIf="username.errors.required" class="text-danger">Username field is required</p>
+                    </div>
+                </div>
+            </div>
+      
+            <div class="form-group row" [ngClass]="{'has-error': email.touched && !email.valid}">
+                <label for="email" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Email Id: </label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <input 
+                        type="email" class="form-control" id="email" placeholder="User's Email"
+                        name="email" #email="ngModel" [(ngModel)]="prf.email" 
+                        maxlength="190" required>
+
+                    <div class="pull-right " *ngIf="email.touched && !email.valid">
+                        <p *ngIf="email.errors.required" class="text-danger">Email field is required</p>
+                    </div>
+                </div>
+            </div>
+      
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false" [disabled]="!profileForm.valid">
+                <a routerLink="/profile" class="btn btn-primary">Back to Profile</a>
+            </div>
+      
+          </form>
+
+        </div>
+        <br><br>
+
+      </div>
+  
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+        <app-profile-password [profileId]="profileId"></app-profile-password>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,82 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Order Comment</h4>
+        </div>
+
+        <app-order-tabs [linkId]="linkId"></app-order-tabs>
+        <hr>
+
+        <div class="nx-comments" style="margin-bottom: 30px;"><div class="">
+          <h4>Comments from User:</h4><br>
+
+          <div class="nx-com-list">
+            <ul class="comment-ul list-unstyled">
+              <li class="row" *ngFor="let com of ordercomment">
+                  <p class="com-name col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">{{ com.commentName }} :</p>
+                  <p class="com-from col-xs-10 col-sm-8 col-md-8 col-lg-8">{{ com.commentText }}</p>
+                  <p class="com-date hidden-xs">{{ com.created_at | date:'short' }}</p>
+              </li>
+              
+              <p class="p20" *ngIf="ordercomment?.length == 0">No Comments Added.</p>
+
+
+              <li class="row hidden" id="com-added">
+                  <p class="com-name col-xs-2 col-sm-2 col-md-2 col-lg-2  text-right">Develover : </p>
+                  <p class="com-from col-xs-10 col-sm-8 col-md-8 col-lg-8" id="new-com"></p>
+                  <p class="com-date hidden-xs">Just Now</p>
+              </li>
+              <li>
+                <form class="" (ngSubmit)="onCreate(commentForm.value)" #commentForm="ngForm" *ngFor="let ord of order">
+
+                  <div class="form-group row hidden">
+                    <label for="customerId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">customerId: </label>
+                    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                        <input type="hidden" class="form-control" id="customerId" name="customerId" #customerId="ngModel" [(ngModel)]="ord.customerId" maxlength="50" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group row hidden">
+                    <label for="orderId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">orderID: </label>
+                    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                        <input type="hidden" class="form-control" id="orderId" name="orderId" #orderId="ngModel" [(ngModel)]="ord.id" maxlength="50" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group row" [ngClass]="{'has-error': commentText.touched && !commentText.valid}">
+                    <label for="commentText" class="com-name hidden-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">Message: </label>
+                    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                        <input 
+                            type="text" class="form-control input-lg" id="commentText" placeholder="Your Message here"
+                            ngModel name="commentText" #commentText="ngModel"
+                            maxlength="400" required>
+      
+                        <div class="pull-right " *ngIf="commentText.touched && !commentText.valid">
+                          <p *ngIf="commentText.errors.required" class="text-danger">Comment field is required</p>
+                        </div>
+                    </div>
+                  </div>
+
+                  <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                      <input type="submit" name="submit" class="btn btn-default" value="Add" contenteditable="false" [disabled]="!commentForm.valid">
+                      <a routerLink="/order" class="btn btn-primary">Back to Orders</a>
+                  </div>
+                
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div></div>
+
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>

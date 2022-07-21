@@ -1,0 +1,44 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+
+    <div class="dash-wrap row">
+
+        <div class="set">
+            <div class="box-head">
+                <h4>Messages from visitors</h4>
+            </div>
+            <div class="list row">
+                <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+                    <thead> 
+                        <tr>
+                            <th>#</th> 
+                            <th>Name</th>
+                            <th>Contact No</th>
+                            <th>Contact Email</th>
+                            <th>Date</th> 
+                            <th>Delete</th>
+                        </tr> 
+                    </thead> 
+                    <tbody> 
+                      <tr class="msg-record" *ngFor="let msg of message">
+                          <td>1</td>
+                          <td><a routerLink='/message/view/{{ msg.id }}'>{{ msg.messageName | titlecase }}</a></td>
+                          <td>{{ msg.messageContact }}</td>
+                          <td>{{ msg.messageEmail }}</td>
+                          <td>{{ msg.created_at | date:'short' }}</td>
+                          <td><button (click)="onDelete(msg)" class="btn btn-default">Delete</button></td>
+                      </tr>                   
+                    </tbody> 
+                </table></div>
+
+            </div>
+        </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

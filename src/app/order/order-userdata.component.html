@@ -1,0 +1,186 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+      <app-processing [process]="process"></app-processing>
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Client Data Received Status</h4>
+          </div>
+
+          <app-order-tabs [linkId]="linkId"></app-order-tabs>
+          <br>
+          <div class="edit" *ngIf="!userdata">
+            <p class="">Data will be available after Order is Confirmed.</p><br><br>
+            <a routerLink="/order" class="btn btn-primary">Back to Orders</a>
+          </div>
+
+          <form class="edit row" (ngSubmit)="onUpdate(userdataForm.value)" #userdataForm="ngForm" *ngFor="let dat of userdata">
+
+            <div class="form-group row hidden">
+              <label for="id" class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <input type="hidden" class="form-control" maxlength="20" name="id" #id="ngModel" [(ngModel)]="dat.id">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="domainName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Domain Name</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="domainName" name="domainName" #domainName="ngModel" [(ngModel)]="dat.domainName">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="tagLine" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Tag Line</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="tagLine" name="tagLine" #tagLine="ngModel" [(ngModel)]="dat.tagLine">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="contactEmail" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Contact Email</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="contactEmail" name="contactEmail" #contactEmail="ngModel" [(ngModel)]="dat.contactEmail">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="contactAddr1" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Contact Address 1</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="contactAddr1" name="contactAddr1" #contactAddr1="ngModel" [(ngModel)]="dat.contactAddr1">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="contactAddr2" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Contact Address 2</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="contactAddr2" name="contactAddr2" #contactAddr2="ngModel" [(ngModel)]="dat.contactAddr2">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="contentFile" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Content File</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="contentFile" name="contentFile" #contentFile="ngModel" [(ngModel)]="dat.contentFile">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="seoContent" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Seo Content</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="seoContent" name="seoContent" #seoContent="ngModel" [(ngModel)]="dat.seoContent">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="pageContent" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Page Content</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="pageContent" name="pageContent" #pageContent="ngModel" [(ngModel)]="dat.pageContent">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="images" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Images</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="images" name="images" #images="ngModel" [(ngModel)]="dat.images">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="favicon" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Logo</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="brandImage" name="brandImage" #brandImage="ngModel" [(ngModel)]="dat.brandImage">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="favicon" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Favicon</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="favicon" name="favicon" #favicon="ngModel" [(ngModel)]="dat.favicon">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="video" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Video</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="video" name="video" #video="ngModel" [(ngModel)]="dat.video">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="videoLink" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Video Link</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="videoLink" name="videoLink" #videoLink="ngModel" [(ngModel)]="dat.videoLink">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="font" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Font</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="font" name="font" #font="ngModel" [(ngModel)]="dat.font">
+                        <option value="RECEIVED">RECEIVED</option>
+                        <option value="NOT RECEIVED">NOT RECEIVED</option>
+                    </select>
+                </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false" />
+                <a routerLink="/order" class="btn btn-primary">Back to Orders</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

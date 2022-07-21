@@ -1,0 +1,61 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Seo Details</h4>
+        </div>
+
+        <div class="show row" *ngFor="let s of seo">
+          
+          <div class="show-top row">
+            <a routerLink="/seo" class="btn btn-primary">View All</a>
+            <a routerLink="/seo/create" class="btn btn-primary">Add New</a>
+            <a routerLink="/seo/edit/{{ s.id }}" class="btn btn-primary">Edit</a>           
+          </div>
+
+          <div class="show-left col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Seo Description</h5></div>
+            <dl class="dl-horizontal">
+              <dt>Page Name :</dt><dd>{{ s.pageName }}</dd>
+              <dt>Seo Status :</dt><dd>{{ s.seoStatus }}</dd>
+              <dt>Title :</dt><dd>{{ s.title }}</dd>
+              <dt>Description :</dt><dd>{{ s.description }}</dd>
+              <dt>Keyword :</dt><dd>{{ s.keyword }}</dd>
+              <dt>Created Date :</dt><dd>{{ s.created_at }}</dd>
+            </dl>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <img class="img-thumbnail" src="{{ s.ogImgName }}">
+            </div>
+          </div>
+
+          <div class="show-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <div><h5>Twitter Description</h5></div>
+              <dl class="dl-horizontal">
+                <dt>twitterCardType :</dt><dd>{{ s.twitterCardType }}</dd>
+                <dt>twitterSite :</dt><dd>{{ s.twitterSite }}</dd>
+                <dt>twitterCreator :</dt><dd>{{ s.twitterCreator }}</dd>
+                <dt>twitterAppCountry :</dt><dd>{{ s.twitterAppCountry }}</dd>
+                <dt>twitterAppNameIphone :</dt><dd>{{ s.twitterAppNameIphone }}</dd>
+                <dt>twitterAppIdIphone :</dt><dd>{{ s.twitterAppIdIphone }}</dd>
+                <dt>twitterAppUrlIphone :</dt><dd>{{ s.twitterAppUrlIphone }}</dd>
+                <dt>twitterAppNameIpad :</dt><dd>{{ s.twitterAppNameIpad }}</dd>
+                <dt>twitterAppIdIpad :</dt><dd>{{ s.twitterAppIdIpad }}</dd>
+                <dt>twitterAppUrlIpad :</dt><dd>{{ s.twitterAppUrlIpad }}</dd>
+                <dt>twitterAppNameGoogleplay :</dt><dd>{{ s.twitterAppNameGoogleplay }}</dd>
+                <dt>twitterAppIdGoogleplay :</dt><dd>{{ s.twitterAppIdGoogleplay }}</dd>
+                <dt>twitterAppUrlGoogleplay :</dt><dd>{{ s.twitterAppUrlGoogleplay }}</dd>
+              </dl>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>
+    

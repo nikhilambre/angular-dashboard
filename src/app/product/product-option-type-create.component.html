@@ -1,0 +1,57 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="create row">
+
+        <div class="set">
+            <div class="box-head">
+                <h4>Add Product Option Types</h4>
+            </div>
+            <form class="edit row" (ngSubmit)="onCreateOptionType(optionTypeForm.value)" #optionTypeForm="ngForm">
+
+                <div class="form-group row" [ngClass]="{'has-error': optionId.touched && !optionId.valid}">
+                    <label for="optionId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Option: </label>
+                    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                        <select class="form-control" id="optionId" name="optionId" #optionId="ngModel" ngModel required>
+                        <option value="{{ opt.id }}" *ngFor="let opt of productoption">{{ opt.optionName }}</option>
+                        </select>
+
+                        <div class="pull-right " *ngIf="optionId.touched && !optionId.valid">
+                            <p *ngIf="optionId.errors.required" class="text-danger">Option field is required</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row" [ngClass]="{'has-error': optionTypeName.touched && !optionTypeName.valid}">
+                    <label for="optionTypeName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Option Type: </label>
+                    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                        <input 
+                            type="text" class="form-control" id="optionTypeName" placeholder="Option Type Name"
+                            ngModel name="optionTypeName" #optionTypeName="ngModel" 
+                            maxlength="40" required>
+
+                        <div class="pull-right " *ngIf="optionTypeName.touched && !optionTypeName.valid">
+                            <p *ngIf="optionTypeName.errors.required" class="text-danger">Option Type field is required</p>
+                        </div>
+                    </div>
+                </div>
+
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                    <input type="submit" name="submit" class="btn btn-default" value="Create" contenteditable="false" [disabled]="!optionTypeForm.valid">
+                    <a routerLink="/product/optiontype" class="btn btn-primary">Back to List</a>
+                </div>
+            </form>
+        </div>
+
+       </div>
+    
+    </div>
+
+    <app-footer></app-footer>
+</div>

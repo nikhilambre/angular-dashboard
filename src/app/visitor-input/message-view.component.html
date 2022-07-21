@@ -1,0 +1,35 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+
+    <div class="dash-wrap row">
+
+      <div class="set">
+          <div class="box-head">
+              <h4>Messages Details</h4>
+          </div>
+
+          <div class="inbox row">
+
+            <dl class="dl-horizontal" *ngFor="let msg of message">
+
+              <dt>Name :</dt>
+                <dd>{{ msg.messageName | titlecase }}</dd>
+              <dt>Contact No :</dt>
+                <dd>{{ msg.messageContact }}</dd>
+              <dt>Email Address :</dt>
+                <dd>{{ msg.messageEmail }}<span class="pull-right">Received Date : {{ msg.created_at }}</span></dd>
+              <dt></dt><dd><hr></dd>
+              <dt>Message : </dt>
+                <dd>{{ msg.messageText }}</dd>
+            </dl>
+          </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

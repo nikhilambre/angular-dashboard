@@ -1,0 +1,41 @@
+
+<nav class="navbar-default navbar-static-side">
+    <div class="sidebar-collapse">
+        <ul class="nav lev1-ul">
+
+            <li class="header-brand">
+                <img src="../assets/images/logo.png" class="img-responsive stores-brand" />
+            </li>
+
+            <li class="header">
+                <div class="prof-li">
+                    <span><img src="../assets/images/teammemb5.jpg" class="img-circle"></span>
+                    <a routerLink="/home">
+                        <span class=""><strong>Hello, User</strong></span>
+                    </a>
+                </div>
+            </li>
+
+            <li *ngFor="let n of menuList" (click)="select(n.name);" 
+                [ngClass]="n.name == pageHeaders[0].activePage ? 'active' : ''">
+                <a routerLink="{{ n.nameLink }}" [style.pointer-events]="n.sub ? 'none' : 'auto'">
+                    <i class="fa fa-{{ n.nameIco }}"></i>
+                    <span>{{ n.name }}</span>
+                    <i class="fa fa-angle-right pull-right" *ngIf="n.sub"></i>
+                </a>
+
+                <div class="col-exp">
+                    <ul [style.display]="isActive(n.name) ? 'block' : 'none'" class="lev2-ul list-unstyled">
+                        <li *ngFor="let child of n.sub">
+                            <a routerLink="{{ child.subLink }}"><i class="fa fa-angle-double-right"></i>&nbsp;&nbsp;{{ child.subName }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="visible-xs">
+                <a (click)="onLogout()"><i class="fa fa-sign-out"></i><span>Log Out</span></a>
+            </li>
+
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,69 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+            <h4>Create Support Question</h4>
+          </div>
+
+          <form class="edit row" (ngSubmit)="onCreate(supportForm.value)" #supportForm="ngForm" >
+
+            <div class="form-group row" [ngClass]="{'has-error': question.touched && !question.valid}">
+              <label for="question" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Question: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <input 
+                      list="ops" type="text" class="form-control" id="question"  placeholder="Support Question"
+                      ngModel name="question" #question="ngModel" 
+                      maxlength="400" required>
+                  <div class="pull-right " *ngIf="question.touched && !question.valid">
+                    <p *ngIf="question.errors.required" class="text-danger">Support Question field is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="answer" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Answer: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <app-text-editor [elementId]="'support-answer'" (onEditorKeyup)="tinymcyFunction($event)"></app-text-editor>
+                  <textarea 
+                        type="hidden" class="hidden" id="answer" rows="8"
+                        name="answer" #answer="ngModel" [(ngModel)]="tinymcyContent" 
+                        maxlength="6000" required></textarea>
+                  <p class="pull-right">Max 6000 words only</p>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': status.touched && !status.valid}">
+              <label for="status" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select [(ngModel)]="defaultStatus" name="status" #status="ngModel" class="form-control" required>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                </select>
+
+                <div class="pull-right " *ngIf="status.touched && !status.valid">
+                    <p *ngIf="status.errors.required" class="text-danger">Status field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Create" contenteditable="false" [disabled]="!supportForm.valid">
+                <a routerLink="/support" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+          
+        </div>
+      </div>
+
+    </div>
+    
+  <app-footer></app-footer>
+</div>

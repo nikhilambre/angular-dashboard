@@ -1,0 +1,71 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+
+    <div class="dash-wrap row">
+
+      <div class="create row" >
+        <div class="set">
+          <div class="box-head">
+            <h4>Filter Edit</h4>
+          </div>
+          <app-order-tabs [linkId]="linkId"></app-order-tabs>
+          <br>
+
+          <form class="edit row" (ngSubmit)="onUpdate(callForm.value)" #callForm="ngForm" *ngFor="let ord of order">
+
+            <div class="row">
+              <label for="customerId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <h5>Order Call Status : <strong>{{ oldCallStatus }}</strong></h5>
+              </div>
+            </div><br><br>
+
+            <div class="form-group row hidden">
+              <label for="customerId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">customerId: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <input type="hidden" class="form-control" id="customerId" name="customerId" #customerId="ngModel" [(ngModel)]="ord.customerId" maxlength="50" required>
+              </div>
+            </div>
+
+            <div class="form-group row hidden">
+              <label for="id" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">orderID: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <input type="hidden" class="form-control" id="id" name="id" #id="ngModel" [(ngModel)]="ord.id" maxlength="50" required>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': callStatus.touched && !callStatus.valid}">
+              <label for="callStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <select name="callStatus" #callStatus="ngModel" [(ngModel)]="oldCallStatus" class="form-control" required>
+                      <option value="NOCALL">NO CALL</option>
+                      <option value="OPEN">OPEN</option>
+                      <option value="SCHEDULED">SCHEDULED</option>
+                      <option value="CLOSED">CLOSED</option>
+                  </select>
+
+                  <div class="pull-right " *ngIf="callStatus.touched && !callStatus.valid">
+                      <p *ngIf="callStatus.errors.required" class="text-danger">Call Status field is required</p>
+                  </div>
+              </div>
+            </div>
+
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false"  [disabled]="!callForm.valid">
+                <a routerLink="/order" class="btn btn-primary">Back to Orders</a>
+            </div>
+            
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  <app-footer></app-footer>
+</div>

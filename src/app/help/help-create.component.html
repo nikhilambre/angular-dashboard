@@ -1,0 +1,58 @@
+<app-side-nav [pageHeaders]="pageHeaders"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+      <app-processing [process]="process"></app-processing>
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Add Help Question</h4>
+          </div>
+          <form class="edit row" enctype="multipart/form-data" (ngSubmit)="onCreate(helpForm.value)" #helpForm="ngForm">
+
+            <div class="form-group row" [ngClass]="{'has-error': helpQuestion.touched && !helpQuestion.valid}">
+              <label for="helpQuestion" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Help Question: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="helpQuestion" placeholder="Help Question"
+                        name="helpQuestion" #helpQuestion="ngModel" ngModel
+                        maxlength="400" required>
+
+                    <div class="pull-right" *ngIf="helpQuestion.touched && !helpQuestion.valid">
+                        <p *ngIf="helpQuestion.errors.required" class="text-danger">Help Question field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': helpAnswer.touched && !helpAnswer.valid}">
+              <label for="helpAnswer" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Help Answer: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="textarea" class="form-control" id="helpAnswer" rows="6" placeholder="Help Answer (Max 4000 characters)"
+                        name="helpAnswer" #helpAnswer="ngModel" ngModel 
+                        maxlength="4000" required></textarea>
+
+                  <div class="pull-right " *ngIf="helpAnswer.touched && !helpAnswer.valid">
+                    <p *ngIf="helpAnswer.errors.required" class="text-danger">Help Answer field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" class="btn btn-default" value="Save" contenteditable="false" [disabled]="!helpForm.valid">
+                <a routerLink="/help" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

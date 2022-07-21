@@ -1,0 +1,100 @@
+<div class="create row">
+  <div class="set">
+    <div class="box-head">
+      <h4>Blog Post Stats</h4>
+    </div>
+
+
+
+      <div class="chart-box row">
+        <div class="col-both col-xs-12 col-sm-3 col-md-3 col-lg-3">
+
+          <div class="week-stat week-stat-type1 row">
+            <div class="row">
+              <div class="left pull-left">
+                <p class="text">Weekly Views</p>
+                <p class="val"><span class="fa fa-bullseye"></span> 4336</p>
+              </div>
+              <div class="right pull-right">
+                <p class="perc rise"><i class="fa fa-angle-double-up"></i> 5%<br></p>
+              </div>
+            </div>
+            <div class="bottom row">
+              <p class="total">Total Views<span> 15803</span></p>
+            </div>
+          </div>
+
+          <div class="week-stat week-stat-type1 row">
+            <div class="row">
+              <div class="left pull-left">
+                <p class="text">Weekly Comments</p>
+                <p class="val"><span class="fa fa-comments"></span> 5</p>
+              </div>
+              <div class="right pull-right">
+                <p class="perc fall"><i class="fa fa-angle-double-down"></i> 13%<br></p>
+              </div>
+            </div>
+            <div class="bottom row">
+              <p class="total">Total Comments<span> 563</span></p>
+            </div>
+          </div>
+
+          <div class="week-stat week-stat-type1 row">
+            <div class="row">
+              <div class="left pull-left">
+                <p class="text">Weekly Likes</p>
+                <p class="val"><span class="fa fa-thumbs-up"></span> 25</p>
+              </div>
+              <div class="right pull-right">
+                <p class="perc rise"><i class="fa fa-angle-double-up"></i> 23%<br></p>
+              </div>
+            </div>
+            <div class="bottom row">
+              <p class="total">Total Likes<span> 798</span></p>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-right col-xs-12 col-sm-9 col-md-9 col-lg-9" style="padding-left: 30px">
+
+          <div class="col-both col-xs-12 col-lg-6 pull-right">
+            <ul class="nav nav-pills" role="tablist">
+              <li role="presentation" (click)="showComment()" [ngClass]="shwComment == true ? 'active' : ''"><a href="javascript:void(0)">Comments</a></li>
+              <li role="presentation" (click)="showView()" [ngClass]="shwView == true ? 'active' : ''"><a href="javascript:void(0)">Views</a></li>
+              <li role="presentation" (click)="showLike()" [ngClass]="shwLike == true ? 'active' : ''"><a href="javascript:void(0)">Likes</a></li>
+            </ul>
+          </div>
+
+          <div class="chart-show" [hidden]="shwComment">
+            <h4 class="">Comments Statistics<br><small>Vestibulum purus quam scelerisque, mollis nonummy metus</small></h4>
+
+            <div class="chart-container">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-show" [hidden]="shwView">
+            <h4 class="">Views Statistics<br><small>Vestibulum purus quam scelerisque, mollis nonummy metus</small></h4>
+
+            <div class="chart-container">
+              <canvas id="myChart2"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-show" [hidden]="shwLike">
+            <h4 class="">Likes Statistics<br><small>Vestibulum purus quam scelerisque, mollis nonummy metus</small></h4>
+            <div class="chart-container">
+              <canvas id="myChart3"></canvas>
+            </div>
+          </div>
+
+        </div>
+  
+      </div>
+
+
+
+
+
+  </div>
+</div>

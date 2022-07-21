@@ -1,0 +1,164 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Comment Details</h4>
+        </div>
+
+        <div class="show row" *ngFor="let com of comment">
+
+          <div class="show-left col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Comment Description</h5></div>
+            <dl class="dl-horizontal">
+              <dt>Comment for Post :</dt><dd><a routerLink="/post/view/{{ com.postId }}">{{ com.postTitle }}</a></dd>
+              <dt>Comment By :</dt><dd><a routerLink="/visitor/view/{{ com.customerId }}">{{ com.name }} {{ com.lastname }}</a></dd>
+              <dt>Comment Status :</dt><dd>{{ com.commentStatus }}</dd>
+              <ng-container *ngIf="com.commentType == 'Reply'">
+                <dt>It's a :</dt><dd><a routerLink="/comment/view/{{ com.commentParentId }}">{{ com.commentType }} of a comment</a></dd>
+              </ng-container>
+              <dt>Comment Date :</dt><dd>{{ com.created_at | date:'short' }}</dd>
+              <dt>Comment :</dt><dd>{{ com.commentContent }}</dd>
+            </dl>
+          </div>
+
+          <div class="show-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Comment Update</h5></div>
+            <form class="create row" (ngSubmit)="onUpdate(commentForm.value)" #commentForm="ngForm">
+              
+              <div class="form-group row hidden">
+                <label for="exampleInputEmail1" class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="id" #id="ngModel" [(ngModel)]="com.id">
+                </div>
+              </div>
+              <br><br>
+
+              <div class="form-group row" [ngClass]="{'has-error': commentStatus.touched && !commentStatus.valid}">
+                <label for="commentStatus" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Status:</label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                  <select [(ngModel)]="com.commentStatus" name="commentStatus" #commentStatus="ngModel" class="form-control" required>
+                    <option value="APPROVED">APPROVED</option>
+                    <option value="DELETED">DELETED</option>
+                    <option value="PENDING">PENDING</option>
+                    <option value="REJECTED">REJECTED</option>
+                  </select>
+  
+                  <div class="pull-right " *ngIf="commentStatus.touched && !commentStatus.valid">
+                      <p *ngIf="commentStatus.errors.required" class="text-danger">Comment Status Status field is required</p>
+                  </div>
+                </div>
+              </div>
+
+              <label class="col-xs-12 col-sm-3 col-md-3 col-lg-3">&nbsp;</label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                  <hr>
+                  <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false" [disabled]="!commentForm.valid" />
+                  <a routerLink="/comment" class="btn btn-primary">Back to List</a>
+              </div>
+            </form>
+            <br><br>
+            <hr>
+
+            <div><h5>Comment Reply</h5></div>
+            <form class="create row" (ngSubmit)="onReply(replyForm.value)" #replyForm="ngForm">
+              
+              <div class="form-group row hidden">
+                <label for="postId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">postId</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="postId" #postId="ngModel" [(ngModel)]="com.postId">
+                </div>
+              </div>
+              <br>
+
+              <div class="form-group row hidden">
+                <label for="customerId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">customerId</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="customerId" #customerId="ngModel" [(ngModel)]="com.customerId">
+                </div>
+              </div>
+
+              <div class="form-group row hidden">
+                <label for="commentStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">commentStatus</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="commentStatus" #commentStatus="ngModel" [(ngModel)]="Aproved">
+                </div>
+              </div>
+
+              <div class="form-group row hidden">
+                <label for="commentType" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">commentType</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="commentType" #commentType="ngModel" [(ngModel)]="Reply">
+                </div>
+              </div>
+
+              <div class="form-group row hidden">
+                <label for="commentFlag" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">commentFlag</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="commentFlag" #commentFlag="ngModel" [(ngModel)]="Read">
+                </div>
+              </div>
+
+              <div class="form-group row hidden">
+                <label for="commentParentId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">commentParentId</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="commentParentId" #commentParentId="ngModel" [(ngModel)]="com.id">
+                </div>
+              </div>
+
+              <div class="form-group row hidden">
+                <label for="like" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">like</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="like" #like="ngModel" [(ngModel)]="likeCount">
+                </div>
+              </div>
+
+              <div class="form-group row hidden">
+                <label for="dislike" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">dislike</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="dislike" #dislike="ngModel" [(ngModel)]="dislikeCount">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-xs-12 col-sm-3 col-md-3 col-lg-3">Replying As: </label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <p>{{ authorName }}</p>
+                </div>
+              </div>
+
+              <div class="form-group row" [ngClass]="{'has-error': commentContent.touched && !commentContent.valid}">
+                <label for="commentContent" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Reply: </label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <textarea 
+                        class="form-control" rows="4" id="commentContent"  placeholder="Reply Text Here"
+                        ngModel name="commentContent" #commentContent="ngModel" 
+                        maxlength="2000" required></textarea>
+  
+                    <div class="pull-right " *ngIf="commentContent.touched && !commentContent.valid">
+                      <p *ngIf="commentContent.errors.required" class="text-danger">Reply field is required</p>
+                    </div>
+                </div>
+              </div>
+
+              <label class="col-xs-12 col-sm-3 col-md-3 col-lg-3">&nbsp;</label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                  <hr>
+                  <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false" [disabled]="!replyForm.valid" />
+                  <a routerLink="/comment" class="btn btn-primary">Back to List</a>
+              </div>
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>
+    

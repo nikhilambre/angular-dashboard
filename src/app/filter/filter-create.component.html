@@ -1,0 +1,64 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+            <h4>Create Filter</h4>
+          </div>
+
+          <form class="edit row" (ngSubmit)="onCreate(filterForm.value)" #filterForm="ngForm" >
+
+            <div class="form-group row" [ngClass]="{'has-error': filterName.touched && !filterName.valid}">
+              <label for="filterName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Name: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <input 
+                      list="ops" type="text" class="form-control" id="filterName"  placeholder="Filter Name"
+                      ngModel name="filterName" #filterName="ngModel" 
+                      maxlength="50" required>
+                  <datalist id="ops">
+                    <option value="Brands">
+                    <option value="Occassions">
+                    <option value="Prize Range">
+                    <option value="Categories">
+                  </datalist>
+
+                  <div class="pull-right " *ngIf="filterName.touched && !filterName.valid">
+                    <p *ngIf="filterName.errors.required" class="text-danger">filter Name field is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': filterType.touched && !filterType.valid}">
+              <label for="filterType" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select [(ngModel)]="defaultStatus" name="filterType" #filterType="ngModel" class="form-control" required>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                </select>
+
+                <div class="pull-right " *ngIf="filterType.touched && !filterType.valid">
+                    <p *ngIf="filterType.errors.required" class="text-danger">filter Status field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Create" contenteditable="false" [disabled]="!filterForm.valid">
+                <a routerLink="/filter" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+          
+        </div>
+      </div>
+
+    </div>
+    
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,9 @@
+
+<div class="row page-heading" *ngFor="let pageHeader of pageHeaders">
+  <h2>{{ pageHeader.header }}</h2>
+  <ol class="breadcrumb">
+    <li><a routerLink="/home">Home</a></li>
+    <li *ngIf="pageHeader.header != pageHeader.activePage">{{ pageHeader.activePage }}</li>
+    <li>{{ pageHeader.subHeader }}</li>
+  </ol>
+</div>

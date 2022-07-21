@@ -1,0 +1,6 @@
+
+<ul class="nav nav-pills " role="tablist" *ngFor="let links of linkId">
+  <li role="presentation" [ngClass]="links.name == 'comment' ? 'active' : ''"><a routerLink='/comment'>Comments</a></li>
+  <li role="presentation" [ngClass]="links.name == 'pending' ? 'active' : ''"><a routerLink='/comment/pending'>Pending Approval</a></li>
+  <li role="presentation" [ngClass]="links.name == 'rejected' ? 'active' : ''"><a routerLink='/comment/rejected'>Rejected</a></li>
+</ul>

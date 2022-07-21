@@ -1,0 +1,144 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Add Product Price</h4>
+          </div>
+          <form class="edit row" enctype="multipart/form-data" (ngSubmit)="onCreate(priceForm.value)" #priceForm="ngForm">
+
+            <div class="form-group row" [ngClass]="{'has-error': productId.touched && !productId.valid}">
+              <label for="productId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Product</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <select class="form-control" id="productId" name="productId" #productId="ngModel" ngModel (change)="onProductChange(productId.value)" required>
+                    <option value="{{ prd.id }}" *ngFor="let prd of product">{{ prd.productName }}</option>
+                  </select>
+                  <div class="pull-right " *ngIf="productId.touched && !productId.valid">
+                      <p *ngIf="productId.errors.required" class="text-danger">Product Name field is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': price.touched && !price.valid}">
+              <label for="price" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Product Price: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input  type="number" class="form-control" id="price" 
+                          placeholder="Product Price" 
+                          name="price" #price="ngModel" ngModel 
+                          (change)="onPriceChange(price.value)" 
+                          maxlength="12" required>
+
+                  <div class="pull-right " *ngIf="price.touched && !price.valid">
+                      <p *ngIf="price.errors.required" class="text-danger">Price field is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': currency.touched && !currency.valid}">
+              <label for="currency" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Product Currency: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <select class="form-control" id="currency" name="currency" #currency="ngModel" [(ngModel)]="currencyValue" [attr.disabled]="productAdded? '':null" required>
+                    <option value="{{ n.value }}" *ngFor="let n of currencyList" disabled="{{ n.status }}">{{ n.text }}</option>
+                  </select>
+
+                  <div class="pull-right " *ngIf="currency.touched && !currency.valid">
+                      <p *ngIf="currency.errors.required" class="text-danger">Currency field is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': priceForQnt.touched && !priceForQnt.valid}">
+              <label for="priceForQnt" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Price for Quantity: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <select class="form-control" name="priceForQnt" #priceForQnt="ngModel" ngModel id="priceForQnt" [attr.disabled]="productAdded? '':null" required>
+                      <option value="Piece">/Piece</option>
+                      <option value="Dozen">/Dozen</option>
+                      <option value="Ton">/Ton</option>
+                      <option value="Quintal">/Quintal</option>
+                      <option value="Kg">/Kg</option>
+                      <option value="Gm">/Grams</option>
+                      <option value="Mg">/Mg</option>
+                      <option value="Liter">/Liter</option>
+                  </select>
+                  <div class="pull-right " *ngIf="priceForQnt.touched && !priceForQnt.valid">
+                      <p *ngIf="priceForQnt.errors.required" class="text-danger">Price For Quantity field is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': discount.touched && !discount.valid}">
+              <label for="discount" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Discount %: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input  type="number" class="form-control" id="discount" 
+                          name="discount" #discount="ngModel" ngModel 
+                          (change)="onDiscountChange(discount.value)" 
+                          placeholder="Between Range 0.0 to 99.99" 
+                          min="0" max=100 required pattern="[0-9]+(\.[0-9]{0,2})?%?" 
+                          [attr.disabled]="priceAdded? '':null">
+
+                  <div class="pull-right " *ngIf="discount.touched && !discount.valid">
+                      <p *ngIf="discount.errors.required" class="text-danger">Discount field is required</p>
+                      <p *ngIf="discount.errors.pattern" class="text-danger">Field must be Between Range 0.0 to 100%</p>
+                  </div>
+              </div>
+            </div>
+
+            <!-- <div class="form-group row hidden" [ngClass]="{'has-error': tax.touched && !tax.valid}">
+              <label for="tax" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Tax %: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input  type="text" class="form-control" id="tax" 
+                          name="tax" #tax="ngModel" ngModel 
+                          (change)="onTaxChange(tax.value)" 
+                          placeholder="Between Range 0.0 to 99.99" 
+                          min="0" max="100" required
+                          [attr.disabled]="priceAdded? '':null">
+
+                  <div class="pull-right " *ngIf="tax.touched && !tax.valid">
+                      <p *ngIf="tax.errors.required" class="text-danger">Tax field is required</p>
+                  </div>
+              </div>
+            </div> -->
+
+            <div class="form-group row">
+              <label for="finalPrice" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Final Price: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input type="text" class="form-control" id="finalPrice" 
+                        name="finalPrice" #finalPrice="ngModel" [(ngModel)]="finalPriceCal" readonly>
+                  <p class="pull-right">(Applying Discounts)</p>
+              </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="taxCategoryId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Tax Category</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select 
+                        class="form-control" id="taxCategoryId" 
+                        #taxCategoryId="ngModel" ngModel name="taxCategoryId"  required>
+    
+                        <ng-container *ngFor="let tax of producttax">
+                            <option value="{{ tax.id }}" >{{ tax.taxCategory }} (Rate: {{ tax.taxRate }}%)</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" class="btn btn-default" value="Save" contenteditable="false" [disabled]="!priceForm.valid">
+                <a routerLink="/product/price" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

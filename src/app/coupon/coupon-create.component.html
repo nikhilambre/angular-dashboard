@@ -1,0 +1,87 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+            <h4>Create Coupon</h4>
+          </div>
+
+          <form class="edit row" (ngSubmit)="onCreate(couponForm.value)" #couponForm="ngForm" >
+
+            <div class="form-group row" [ngClass]="{'has-error': couponCode.touched && !couponCode.valid}">
+              <label for="couponCode" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Coupon Code: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="couponCode" placeholder="Coupon Code"
+                        name="couponCode" #couponCode="ngModel" ngModel
+                        maxlength="16" required>
+
+                    <div class="pull-right" *ngIf="couponCode.touched && !couponCode.valid">
+                        <p *ngIf="couponCode.errors.required" class="text-danger">Coupon Code field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': couponPercentage.touched && !couponPercentage.valid}">
+              <label for="couponPercentage" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Coupon Discount in %: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                      type="text" class="form-control" id="couponPercentage" placeholder="Between Range 0.0 to 99.99" 
+                      name="couponPercentage" #couponPercentage="ngModel" ngModel
+                      min="0" max=100 pattern="[0-9]+(\.[0-9]{0,2})?%?" >
+
+                    <div class="pull-right" *ngIf="couponPercentage.touched && !couponPercentage.valid">
+                        <p *ngIf="couponPercentage.errors.pattern" class="text-danger">Coupon Code field value is invalild</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">OR</label>
+            </div>
+
+            <div class="form-group row">
+              <label for="couponAmount" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Coupon Discount in Amount: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="couponAmount" placeholder="Coupon Discount in Amount"
+                        name="couponAmount" #couponAmount="ngModel" ngModel
+                        maxlength="10">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': status.touched && !status.valid}">
+              <label for="status" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select [(ngModel)]="defaultStatus" name="status" #status="ngModel" class="form-control" required>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                </select>
+
+                <div class="pull-right " *ngIf="status.touched && !status.valid">
+                    <p *ngIf="status.errors.required" class="text-danger">Coupon Status field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Create" contenteditable="false" [disabled]="!couponForm.valid">
+                <a routerLink="/coupon" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+          
+        </div>
+      </div>
+
+    </div>
+    
+  <app-footer></app-footer>
+</div>

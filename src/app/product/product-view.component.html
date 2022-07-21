@@ -1,0 +1,70 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Product Details</h4>
+        </div>
+        <div class="show row">
+            <div class="show-top row">
+              <a routerLink="/product" class="btn btn-primary">View All</a>
+              <a routerLink="/product/create" class="btn btn-primary">Add New</a>
+              <a routerLink="/product/edit/{{ pageLink }}" class="btn btn-primary">Edit</a>
+            </div>
+  
+            <div class="show-left col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <div><h5>Product Details</h5></div>
+              <dl class="dl-horizontal" *ngFor="let prd of product">
+                <dt>Product Id :</dt><dd>{{ prd.productDisplayId }}</dd>
+                <dt>Product Name :</dt><dd>{{ prd.productName }}</dd>
+                <dt>Description :</dt><dd>{{ prd.shortDescription }}</dd>
+                <dt>Status :</dt><dd>{{ prd.status }}</dd>
+                <dt>Tag Mark :</dt><dd>{{ prd.mark }}</dd>
+                <dt>Coupons :</dt><dd>{{ prd.couponStatus }}</dd>
+                <dt>Product Stock :</dt><dd>{{ prd.productStock }}</dd>
+                <dt>Created Date :</dt><dd>{{ prd.productCreated }}</dd>
+              </dl>
+            </div>
+  
+            <div class="show-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <div><h5>Product Categories</h5></div>
+              <dl class="dl-horizontal">
+                <ng-container *ngFor="let cat of catmaps">
+                  <dt>{{ cat.filterName }} :</dt><dd>{{ cat.categoryName }}</dd>
+                </ng-container>
+              </dl>
+            </div>
+  
+            <div class="show-full row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div><h5>Product Images</h5></div>
+                <div class="show-img" *ngFor="let img of images">
+                  <img src="{{ url }}public/storage/product/{{ img.imageName }}" class="img-thumbnail" alt="product image">
+                </div>
+            </div>
+  
+            <div class="show-full row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div><h5>Product Short Description</h5></div>
+              <dl class="dl-horizontal" *ngFor="let prd of product">
+                <dt>Short Description :</dt><dd>{{ prd.shortDescription }}</dd>
+              </dl>
+            </div>
+  
+            <div class="show-full row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div><h5>Product Description</h5></div>
+                <dl class="dl-horizontal" *ngFor="let prd of product">
+                  <dt>Description :</dt><dd innerHTML="{{ prd.description }}"></dd>
+                </dl>
+            </div>
+          </div>
+
+      </div>
+
+    </div>
+  <app-footer></app-footer>
+</div>
+    

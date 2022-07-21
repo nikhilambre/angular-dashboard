@@ -1,0 +1,180 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Add Template</h4>
+          </div>
+          <form class="edit row" enctype="multipart/form-data" (ngSubmit)="onCreate(templateForm.value)" #templateForm="ngForm">
+
+            <div class="form-group row">
+              <label for="typeId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Template Id: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="typeId" placeholder="Template Id"
+                        name="typeId" #typeId="ngModel" ngModel
+                        maxlength="60" required>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="typeName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Template Name: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="typeName" placeholder="Template Name"
+                        name="typeName" #typeName="ngModel" ngModel
+                        maxlength="60">
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="type" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Type: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select class="form-control" id="type" name="type" #type="ngModel" ngModel required>
+                  <option value="header">Header</option>
+                  <option value="footer">Footer</option>
+                  <option value="sidebar">Sidebar</option>
+                  <option value="pagehead">Page Header</option>
+                  <option value="contact">Contact</option>
+                  <option value="component">Component</option>
+                </select>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="subType" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Sub Type (number): </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                  type="text" class="form-control" id="subType" placeholder="Sub Type"
+                  name="subType" #subType="ngModel" ngModel
+                  maxlength="60" required>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="status" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Status</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select [(ngModel)]="defaultStatus" class="form-control" id="status" name="status" #status="ngModel" required>
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="typeDescription" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Template Description: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="text" class="form-control" id="typeDescription" rows="5" placeholder="Template Description"
+                        name="typeDescription" #typeDescription="ngModel" ngModel
+                        maxlength="2400"></textarea>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="htmlContent" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*html Content: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="text" class="form-control" id="htmlContent" rows="12" placeholder="html Content"
+                        name="htmlContent" #htmlContent="ngModel" ngModel></textarea>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="templateImage" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Template Image: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                  type="text" class="form-control" id="templateImage" placeholder="Template Image"
+                  name="templateImage" #templateImage="ngModel" ngModel
+                  maxlength="60">
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="customStyle" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*custom Style: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="text" class="form-control" id="customStyle" rows="8" placeholder="custom Style"
+                        name="customStyle" #customStyle="ngModel" ngModel
+                        maxlength="1000"></textarea>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="vendorStyle" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*vendor Style: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="text" class="form-control" id="vendorStyle" rows="8" placeholder="vendor Style"
+                        name="vendorStyle" #vendorStyle="ngModel" ngModel
+                        maxlength="1000"></textarea>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="fonts" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*fonts: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="text" class="form-control" id="fonts" rows="8" placeholder="fonts"
+                        name="fonts" #fonts="ngModel" ngModel
+                        maxlength="1000"></textarea>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="vendorScripts" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*vendor Scripts: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="text" class="form-control" id="vendorScripts" rows="8" placeholder="vendor Scripts"
+                        name="vendorScripts" #vendorScripts="ngModel" ngModel></textarea>
+
+              </div>
+            </div>
+
+            <div class="form-group row" >
+              <label for="scripts" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*scripts: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="text" class="form-control" id="scripts" rows="8" placeholder="scripts including start script tag"
+                        name="scripts" #scripts="ngModel" ngModel></textarea>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="htmlLaravelContent" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*laravel Content: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="text" class="form-control" id="htmlLaravelContent" rows="12" placeholder="html Content"
+                        name="htmlLaravelContent" #htmlLaravelContent="ngModel" ngModel></textarea>
+              </div>
+            </div>
+
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" class="btn btn-default" value="Save" contenteditable="false" [disabled]="!templateForm.valid">
+                <a routerLink="/template" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

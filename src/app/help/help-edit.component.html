@@ -1,0 +1,64 @@
+<app-side-nav [pageHeaders]="pageHeaders"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+      <app-processing [process]="process"></app-processing>
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Update Help Question</h4>
+          </div>
+
+          <form class="edit row" (ngSubmit)="onUpdate(helpForm.value)" #helpForm="ngForm" *ngFor="let he of help">
+
+            <div class="form-group row hidden">
+              <label for="id" class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <input type="hidden" class="form-control" maxlength="20" name="id" #id="ngModel" [(ngModel)]="he.id">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': helpQuestion.touched && !helpQuestion.valid}">
+              <label for="helpQuestion" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Help Question: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                      type="text" class="form-control"
+                      name="helpQuestion" #helpQuestion="ngModel" [(ngModel)]="he.helpQuestion"
+                      maxlength="400" required>
+
+                      <div class="pull-right" *ngIf="helpQuestion.touched && !helpQuestion.valid">
+                        <p *ngIf="helpQuestion.errors.required" class="text-danger">Help Question field is required</p>
+                      </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="helpAnswer" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Help Answer: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <textarea 
+                      type="textarea" class="form-control" rows="8" id="helpAnswer" placeholder="Help Answer (Max 4000 characters)" 
+                      name="helpAnswer" #helpAnswer="ngModel" [(ngModel)]="he.helpAnswer" 
+                      maxlength="4000"></textarea>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false" />
+                <a routerLink="/help" class="btn btn-primary">Back to List</a>
+                <button (click)="onDelete(he)" class="btn btn-default">Delete</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

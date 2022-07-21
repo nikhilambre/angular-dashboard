@@ -1,0 +1,87 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+  <app-processing [process]="process"></app-processing>
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Affiliate Details</h4>
+        </div>
+
+        <div class="show row" *ngFor="let afi of affiliate">
+          
+          <div class="show-top row">
+            <a routerLink="/affiliate" class="btn btn-primary">View All</a>
+            <a routerLink="/affiliate/order-list/{{ afi.id }}" class="btn btn-primary">Leads Generated</a>
+          </div>
+
+          <div class="show-left col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Affiliate Details</h5></div>
+            <dl class="dl-horizontal">
+              <dt>Name :</dt><dd>{{ afi.name }}</dd>
+              <dt>Lastname :</dt><dd>{{ afi.lastname }}</dd>
+              <dt>Email :</dt><dd>{{ afi.email }}</dd>
+              <dt>Category :</dt><dd>{{ afi.category }}</dd>
+              <dt>Affiliate Code :</dt><dd>{{ afi.affiliate_id }}</dd>
+              <dt>Contact No :</dt><dd>{{ afi.contact_no }}</dd>
+              <dt>Created Date :</dt><dd>{{ afi.created_at }}</dd>
+            </dl>
+
+            <div><h5>Affiliate Billing Details</h5></div>
+            <dl class="dl-horizontal">
+              <dt>Bank Account No :</dt><dd>{{ afi.bank_Acc_no }}</dd>
+              <dt>Bank IFSC Code :</dt><dd>{{ afi.bank_ifsc_code }}</dd>
+              <dt>Paypal Email :</dt><dd>{{ afi.Paypal_email }}</dd>
+              <dt>Paytm No :</dt><dd>{{ afi.paytm_number }}</dd>
+              <dt>Tez No :</dt><dd>{{ afi.tez_number }}</dd>
+            </dl>
+          </div>
+
+          <div class="show-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Affiliate Update</h5></div>
+            <form class="create row" (ngSubmit)="onUpdate(affiliateForm.value)" #affiliateForm="ngForm">
+              
+              <div class="form-group row hidden">
+                <label for="exampleInputEmail1" class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="id" #id="ngModel" [(ngModel)]="afi.id">
+                </div>
+              </div>
+              <br><br>
+            
+              <div class="form-group row" [ngClass]="{'has-error': category.touched && !category.valid}">
+                <label for="category" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Payment Status:</label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                  <select [(ngModel)]="afi.category" name="category" #category="ngModel" class="form-control" required>
+                    <option value="LEVEL1">LEVEL 1</option>
+                    <option value="LEVEL2">LEVEL 2</option>
+                    <option value="LEVEL3">LEVEL 3</option>
+                    <option value="LEVEL4">LEVEL 4</option>
+                    <option value="LEVEL5">LEVEL 5</option>
+                  </select>
+            
+                  <div class="pull-right " *ngIf="category.touched && !category.valid">
+                      <p *ngIf="category.errors.required" class="text-danger">Category field is required</p>
+                  </div>
+                </div>
+              </div>
+
+              <label class="col-xs-12 col-sm-3 col-md-3 col-lg-3">&nbsp;</label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                  <hr>
+                  <input type="submit" class="btn btn-default" value="Update" contenteditable="false" [disabled]="!affiliateForm.valid" />
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>
+    

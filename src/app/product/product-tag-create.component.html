@@ -1,0 +1,30 @@
+<div class="create row">
+  <div class="set">
+    <div class="box-head">
+      <h4>Create Tag</h4>
+    </div>
+
+    <form class="edit row" (ngSubmit)="onCreate(tagForm.value)" #tagForm="ngForm" >
+
+      <div class="form-group row" [ngClass]="{'has-error': tagName.touched && !tagName.valid}">
+        <label for="tagName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Tag Name: </label>
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+            <input 
+                type="text" class="form-control" id="tagName" placeholder="Tag Name"
+                ngModel name="tagName" #tagName="ngModel" 
+                maxlength="40" required>
+
+            <div class="pull-right " *ngIf="tagName.touched && !tagName.valid">
+                <p *ngIf="tagName.errors.required" class="text-danger">Tag Name field is required</p>
+            </div>
+        </div>
+      </div>
+
+      <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+      <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+          <input type="submit" name="submit" class="btn btn-default" value="Create" contenteditable="false" [disabled]="!tagForm.valid">
+      </div>
+    </form>
+    
+  </div>
+</div>

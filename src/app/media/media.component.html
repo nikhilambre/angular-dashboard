@@ -1,0 +1,62 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <div class="dash-wrap row">
+
+      <app-media-add></app-media-add>
+
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0;">
+          <div class="set">
+            <div class="box-head">
+                <h4>Available Media</h4>
+            </div>
+            
+            <div class="list row">
+              <ul class="list-inline list-unstyled">
+                <li *ngFor="let m of media" class="media-li col-md-4">
+                  <div class="media-box">
+
+                    <div class="media-cover">
+                      <div *ngIf="m.mediaType == 'image/jpeg' ||
+                            m.mediaType == 'image/gif' ||
+                            m.mediaType == 'image/bmp' ||
+                            m.mediaType == 'image/png' ||
+                            m.mediaType == 'image/jpg'">
+                        <img  class="mediaCopyImg" src="{{ url }}public/storage/media/{{ m.mediaName }}" alt="media">
+                      </div>
+
+                      <div *ngIf="m.mediaType == 'video/mov' ||
+                            m.mediaType == 'video/mp4' ||
+                            m.mediaType == 'video/wmv' ||
+                            m.mediaType == 'video/avi' ||
+                            m.mediaType == 'video/webm' ||
+                            m.mediaType == 'video/x-m4v' ||
+                            m.mediaType == 'video/x-ms-wmv' ||
+                            m.mediaType == 'video/x-msvideo' ||
+                            m.mediaType == 'video/3gpp' ||
+                            m.mediaType == 'video/mpeg' ||
+                            m.mediaType == 'video/ogv' ||
+                            m.mediaType == 'video/x-matroska'">
+                        <video  class="mediaCopyImg" preload="metadata">
+                          <source src="{{ url }}public/storage/media/{{ m.mediaName }}">
+                        </video>
+                        <span class="ico-play fa fa-play-circle fa-4x"></span>
+                      </div>
+                    </div>
+
+                    <textarea type="textarea" class="mediaNameText" #inputTarget>{{ url }}public/storage/media/{{ m.mediaName }}</textarea>
+                    <button class="btn btn-primary mediaCopyBtn" type="button" [ngxClipboard]="inputTarget" (click)="onCopy()">Copy Link</button>
+                    <button class="btn btn-primary mediaCopyBtn" type="button" (click)="onDelete(m)">Delete</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+          </div>
+        </div>      
+
+    </div>
+    <app-footer></app-footer>
+  </div>

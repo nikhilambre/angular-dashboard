@@ -1,0 +1,10 @@
+
+<ul class="nav nav-pills" role="tablist" *ngFor="let links of linkId">
+  <li role="presentation" [ngClass]="links.name == 'detail' ? 'active' : ''"><a routerLink='/order/detail/{{ links.id }}'>Details</a></li>
+  <li role="presentation" [ngClass]="links.name == 'address' ? 'active' : ''"><a routerLink='/order/address/{{ links.id }}'>Address Details</a></li>
+  <li role="presentation" [ngClass]="links.name == 'data' ? 'active' : ''"><a routerLink='/order/data/{{ links.id }}'>Component</a></li>
+  <li role="presentation" [ngClass]="links.name == 'comment' ? 'active' : ''"><a routerLink='/order/comment/{{ links.id }}'>Comments</a></li>
+  <li role="presentation" [ngClass]="links.name == 'update' ? 'active' : ''"><a routerLink='/order/update/{{ links.id }}'>Update</a></li>
+  <li role="presentation" [ngClass]="links.name == 'call' ? 'active' : ''"><a routerLink='/order/call/{{ links.id }}'>Call Raised</a></li>
+  <li role="presentation" [ngClass]="links.name == 'userdata' ? 'active' : ''"><a routerLink='/order/userdata/{{ links.id }}'>Client Data Status</a></li>
+</ul>

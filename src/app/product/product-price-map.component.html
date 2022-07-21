@@ -1,0 +1,62 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <div class="row page-heading">
+        <h2>Product Price</h2>
+        <ol class="breadcrumb">
+          <li>Dashboard</li>
+          <li><a routerLink="/home">Home</a></li>
+          <li>Prices for Product</li>
+        </ol>
+    </div>
+
+    <div class="dash-wrap row">
+
+      <div class="set">
+          <div class="box-head">
+              <h4>All Prices for Product</h4>
+          </div>
+          <div class="list row">
+                <div class="">
+                    <a routerLink="/product/price/create" class="btn btn-primary">Add New</a>
+                </div><br><br>
+                <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+                    <thead> 
+                        <tr> 
+                            <th>#</th> 
+                            <th>Product Name</th> 
+                            <!-- <th>Product Id</th>  -->
+                            <th>Final price</th>
+                            <th>Currency</th> 
+                            <th>Price Quantity</th>
+                            <th>Discount</th>
+                            <th>Tax</th>
+                            <th>Create date</th>
+                            <th>Edit</th>
+                            <th>Del</th>
+                        </tr> 
+                    </thead> 
+                    <tbody>
+                        <tr class="msg-record" *ngFor="let pri of price; let i=index">
+                            <td>{{ i+1 }}</td>
+                            <td><a routerLink='/product/price/view/{{ pri.productId }}'>{{ pri.productName | titlecase }}</a></td>
+                            <!-- <td><a routerLink='/product/view/{{ pri.productId }}'>{{ pri.productDisplayId }}</a></td> -->
+                            <td>{{ pri.finalPrice}}</td>
+                            <td>{{ pri.currency | uppercase }}</td>
+                            <td>{{ pri.priceForQnt }}</td>
+                            <td>{{ pri.discount }}</td>
+                            <td>{{ pri.tax }}</td>
+                            <td>{{ pri.created_at | date:'short' }}</td>
+                            <td><a routerLink='/product/price/edit/{{ pri.id }}' class=""><i class="fa fa-edit"></i></a></td>
+                            <td><span (click)="onDelete(pri)" class=""><i class="fa fa-trash"></i></span></td>
+                        </tr>
+                    </tbody> 
+                </table></div>
+          </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,41 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Reviews</h4>
+        </div>
+
+        <div class="list row">
+            <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+                <thead> 
+                    <tr> 
+                        <th>#</th> 
+                        <th>Review</th>
+                        <th>Product</th>
+                        <th>Ratings</th>
+                        <th>Created</th>
+                    </tr> 
+                </thead> 
+                <tbody> 
+                    <tr class="msg-record" *ngFor="let rev of review; let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td><a routerLink='/review/view/{{ rev.id }}'>{{ rev.reviewContent | slice:0:60 }}</a></td>
+                        <td><a routerLink='/product/view/{{ rev.productId }}'>{{ rev.productName | slice:0:40 }}</a></td>
+                        <td>{{ rev.rating }}</td>
+                        <td>{{ rev.created_at | date:'short' }}</td>
+                    </tr>
+                </tbody> 
+            </table></div>
+        </div>
+
+
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>

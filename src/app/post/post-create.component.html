@@ -1,0 +1,177 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+    
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+            <h4>Create Post</h4>
+          </div>
+
+          <form class="edit row" (ngSubmit)="onCreate(postForm.value)" #postForm="ngForm" >
+            
+            <div class="form-group row" [ngClass]="{'has-error': postTitle.touched && !postTitle.valid}">
+              <label for="postTitle" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Post Title: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                      type="textarea" rows="4" class="form-control" id="postTitle"  placeholder="Post Title"
+                      ngModel name="postTitle" #postTitle="ngModel" 
+                      maxlength="400" required></textarea>
+
+                  <div class="pull-right " *ngIf="postTitle.touched && !postTitle.valid">
+                    <p *ngIf="postTitle.errors.required" class="text-danger">Post Title field is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': categoryId.touched && !categoryId.valid}">
+              <label for="categoryId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Blog Category: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <select class="form-control" id="categoryId" name="categoryId" #categoryId="ngModel" ngModel required>
+                    <option *ngFor="let cat of category" value="{{ cat.id }}">{{ cat.categoryName }}</option>
+                  </select>
+
+                  <div class="pull-right " *ngIf="categoryId.touched && !categoryId.valid">
+                      <p *ngIf="categoryId.errors.required" class="text-danger">Blog Category is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': postSubTitle.touched && !postSubTitle.valid}">
+              <label for="postSubTitle" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Post Subtitle: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                      type="textarea" rows="4" class="form-control" id="postSubTitle"  placeholder="Post Sub Title"
+                      ngModel name="postSubTitle" #postSubTitle="ngModel" 
+                      maxlength="800" required></textarea>
+
+                  <div class="pull-right " *ngIf="postSubTitle.touched && !postSubTitle.valid">
+                    <p *ngIf="postSubTitle.errors.required" class="text-danger">Post Subtitle field is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': authorId.touched && !authorId.valid}">
+              <label for="authorId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*By Author: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <select class="form-control" id="authorId" name="authorId" #authorId="ngModel" ngModel required>
+                    <option *ngFor="let aut of author" value="{{ aut.id }}">{{ aut.authorName }}</option>
+                  </select>
+
+                  <div class="pull-right " *ngIf="authorId.touched && !authorId.valid">
+                      <p *ngIf="authorId.errors.required" class="text-danger">Author field is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="postImage" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Post Thumbnail Image: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                      type="file" class=""  id="postImage" class="form-control"
+                      name="postImage" #postImage="ngModel" ngModel accept="image/*">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': postImgCredits.touched && !postImgCredits.valid}">
+              <label for="postImgCredits" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Thubnail Image Credits: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                      type="text" class="form-control" id="postImgCredits"  placeholder="Image Credits"
+                      ngModel name="postImgCredits" #postImgCredits="ngModel" 
+                      maxlength="800">
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': postStatus.touched && !postStatus.valid}">
+              <label for="postStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select [(ngModel)]="defaultStatus" name="postStatus" #postStatus="ngModel" class="form-control" required>
+                    <option value="DRAFT">Save as Draft</option>
+                    <option value="PUBLISH">Publish</option>
+                </select>
+
+                <div class="pull-right " *ngIf="postStatus.touched && !postStatus.valid">
+                    <p *ngIf="postStatus.errors.required" class="text-danger">Post Status field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': readMinutes.touched && !readMinutes.valid}">
+              <label for="readMinutes" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Approx Time to read Blog (in Minutes): </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                      list="ops" type="text" class="form-control" id="readMinutes"  placeholder="Time in Minutes"
+                      ngModel name="readMinutes" #readMinutes="ngModel" 
+                      maxlength="400" required pattern="[0-9]{1,7}">
+
+                  <div class="pull-right " *ngIf="readMinutes.touched && !readMinutes.valid">
+                    <p *ngIf="readMinutes.errors.required" class="text-danger">Read Interval field is required</p>
+                    <p *ngIf="readMinutes.errors.pattern" class="text-danger">Read Interval must be a Number</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': postRank.touched && !postRank.valid}">
+              <label for="postRank" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Post Visibility Rank:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select [(ngModel)]="defaultRank" name="postRank" #postRank="ngModel" class="form-control" required>
+                  <option value="1">Always On Top</option>  
+                  <option value="2">Most Imprortant</option>
+                  <option value="3">Very Imprortant</option>
+                  <option value="4">Imprortant</option>
+                  <option value="5">Less Important</option>
+                </select>
+
+                <div class="pull-right " *ngIf="postRank.touched && !postRank.valid">
+                    <p *ngIf="postRank.errors.required" class="text-danger">Post Type field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': commentStatus.touched && !commentStatus.valid}">
+              <label for="commentStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Comments Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select [(ngModel)]="comStatus" name="commentStatus" #commentStatus="ngModel" class="form-control" required>
+                    <option value="INACTIVE">Comments Inactive</option>
+                    <option value="ACTIVE">Signed in users can comment</option>
+                </select>
+
+                <div class="pull-right " *ngIf="commentStatus.touched && !commentStatus.valid">
+                    <p *ngIf="commentStatus.errors.required" class="text-danger">Comment Status field is required</p>
+                </div>
+              </div>
+            </div><br><br>
+
+            <div class="form-group row">
+              <label for="postContent" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Post Content: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <app-text-editor [elementId]="'blog-post'" (onEditorKeyup)="tinymcyFunction($event)"></app-text-editor>
+                  <textarea 
+                        type="hidden" class="hidden" id="postContent" rows="8" placeholder="Category Description (Max 1600 characters)"
+                        name="postContent" #postContent="ngModel" [(ngModel)]="tinymcyContent" 
+                        maxlength="25000" required></textarea>
+                  <p class="pull-right">Max 25000 words only</p>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Create" contenteditable="false" [disabled]="!postForm.valid">
+                <a routerLink="/post" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+
+
+        </div>
+      </div>
+
+    </div>
+    
+  <app-footer></app-footer>
+</div>

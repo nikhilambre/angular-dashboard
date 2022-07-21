@@ -1,0 +1,45 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+
+    <div class="dash-wrap row">
+
+        <div class="set">
+            <div class="box-head">
+                <h4>Products In Cart</h4>
+            </div>
+            <div class="list row">
+                <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Cost Paid</th>
+                            <th>Quantity</th>
+                            <th>Cart Status</th>
+                            <th>Delivery Status</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="msg-record" *ngFor="let car of cart; let i=index">
+                            <td>{{ i+1 }}</td>
+                            <td><a routerLink='/order-cart/view/{{ car.id }}'><strong>{{ car.productName }}</strong></a></td>
+                            <td><i class="fa fa-{{ car.currency }}"></i> {{ car.productCost }}</td>
+                            <td>{{ car.quantity }}</td>
+                            <td>{{ car.status }}</td>
+                            <td>{{ car.deliveryStatus }}</td>
+                            <td>{{ car.created_at | date:'short' }}</td>
+                        </tr>
+                    </tbody> 
+                </table></div>
+            </div>
+        </div>
+    </div>
+
+
+  <app-footer></app-footer>
+</div>

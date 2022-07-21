@@ -1,0 +1,143 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Edit Product Price</h4>
+          </div>
+          <form class="edit row" (ngSubmit)="onUpdate(priceForm.value)" #priceForm="ngForm" *ngFor="let pri of productprice">
+
+              <div class="form-group row hidden">
+                <label for="exampleInputEmail1" class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="id" #id="ngModel" [(ngModel)]="pri.id">
+                </div>
+              </div>
+  
+              <div class="form-group row hidden">
+                <label for="productId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <input type="hidden" class="form-control" id="productId" 
+                          name="productId" #productId="ngModel" [(ngModel)]="pri.productId">
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                <label for="productName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Product Name: </label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <input type="text" class="form-control" id="productName" 
+                          name="productName" #productName="ngModel" [(ngModel)]="pri.productName" readonly>
+                </div>
+              </div>
+  
+              <div class="form-group row" [ngClass]="{'has-error': price.touched && !price.valid}">
+                <label for="price" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Product Price: </label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <input  type="text" class="form-control" id="price" 
+                            placeholder="Product Price" 
+                            name="price" #price="ngModel" [(ngModel)]="pri.price" 
+                            (change)="onPriceChange(price.value)" 
+                            maxlength="12" required>
+  
+                    <div class="pull-right " *ngIf="price.touched && !price.valid">
+                        <p *ngIf="price.errors.required" class="text-danger">Price field is required</p>
+                    </div>
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                <label for="currency" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Product Currency: </label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" id="currency" name="currency" #currency="ngModel" [(ngModel)]="pri.currency" [attr.disabled]="productAdded? '':null">
+  
+                      <option value="{{ n.value }}" 
+                              *ngFor="let n of currencyList" 
+                              disabled="{{ n.status }}">{{ n.text }}</option>
+                    </select>
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                <label for="priceForQnt" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Price for Quantity: </label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select class="form-control" name="priceForQnt" #priceForQnt="ngModel" [(ngModel)]="pri.priceForQnt" id="priceForQnt" [attr.disabled]="productAdded? '':null">
+                        <option value="Piece">/Piece</option>
+                        <option value="Dozen">/Dozen</option>
+                        <option value="Ton">/Ton</option>
+                        <option value="Quintal">/Quintal</option>
+                        <option value="Kg">/Kg</option>
+                        <option value="Gm">/Grams</option>
+                        <option value="Mg">/Mg</option>
+                        <option value="Liter">/Liter</option>
+                    </select>
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                <label for="discount" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Discount %: </label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <input  type="text" class="form-control" id="discount" 
+                            name="discount" #discount="ngModel" [(ngModel)]="discounts" 
+                            (change)="onDiscountChange(discount.value)" 
+                            placeholder="% Discount" 
+                            min="0" max="100">
+                    <p class="pull-right">(Between 0.0 to 99.99)</p>
+                </div>
+              </div>
+  
+              <!-- <div class="form-group row hidden">
+                <label for="tax" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Tax %: </label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <input  type="text" class="form-control" id="tax" 
+                            name="tax" #tax="ngModel" [(ngModel)]="taxes"  
+                            (change)="onTaxChange(tax.value)" 
+                            placeholder="% Tax" 
+                            min="0" max="100">
+                    <p class="pull-right">(Between 0.0 to 99.99)</p>
+                </div>
+              </div> -->
+  
+              <div class="form-group row">
+                <label for="finalPrice" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Final Price: </label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <input type="text" class="form-control" id="finalPrice" 
+                          name="finalPrice" #finalPrice="ngModel" [(ngModel)]="finalPriceCal" readonly>
+                    <p class="pull-right">(Applying Discounts)</p>
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                  <label for="taxCategoryId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Tax Category</label>
+                  <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                      <select 
+                          class="form-control" id="taxCategoryId" 
+                          #taxCategoryId="ngModel" [(ngModel)]="pri.taxCategoryId" name="taxCategoryId"  required>
+      
+                          <ng-container *ngFor="let tax of producttax">
+                              <option value="{{ tax.id }}" >{{ tax.taxCategory }} (Rate: {{ tax.taxRate }}%)</option>
+                          </ng-container>
+                      </select>
+                  </div>
+              </div>
+  
+              <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <hr>
+                  <input type="submit" class="btn btn-default" value="Update" contenteditable="false" [disabled]="!priceForm.valid">
+                  <a routerLink="/product/price" class="btn btn-primary">Back to List</a>
+              </div>
+            </form>
+        </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

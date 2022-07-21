@@ -1,0 +1,19 @@
+Products Components details::
+
+Product Components
+1.  product-create          create product
+2.  product                 product list
+3.  product-view            single product display
+4.  product-price           product price list for all Products
+5.  product-price-view      single product & single currency details as view
+6.  product-price-map       single product all currency list
+7.  product-price-edit      product price edit
+8.  product-price-create    product price create
+9.  product-option          3-views combined and basically for list of option types
+10. product-option-type     create option type
+11. product-option-map      map option types with product
+12. product-option-list     all option type list product wise
+13. product-option-create   create option
+
+
+It includes 6 services as product, product-price, product-options, product-option-type, product-option-type-map & product-tags

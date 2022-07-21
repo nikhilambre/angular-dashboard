@@ -1,0 +1,195 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+  <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  <app-processing [process]="process"></app-processing>
+
+  <div class="dash-wrap row">
+    <form class="edit row" (ngSubmit)="onCreate(productForm.value)" #productForm="ngForm" enctype="multipart/form-data">
+
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="padding: 0">
+        <div class="set">
+          <div class="box-head">
+              <h4>Product Details</h4>
+          </div>
+
+          <div class="edit row">
+
+            <div class="form-group row" [ngClass]="{'has-error': productName.touched && !productName.valid}">
+              <label for="productName" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Name: </label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                <input 
+                    type="text" class="form-control" id="productName" placeholder="Product Name" 
+                    name="productName" #productName="ngModel" ngModel 
+                    maxlength="190" required>
+
+                <div class="pull-right " *ngIf="productName.touched && !productName.valid">
+                    <p *ngIf="productName.errors.required" class="text-danger">product Name field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': shortDescription.touched && !shortDescription.valid}">
+              <label for="shortDescription" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Short Description: </label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                <textarea 
+                    type="textarea" rows="5" class="form-control" id="shortDescription" placeholder="Product Short Description (Max 400 characters)"
+                    name="shortDescription" #shortDescription="ngModel" ngModel 
+                    maxlength="400" required></textarea>
+
+                <div class="pull-right " *ngIf="shortDescription.touched && !shortDescription.valid">
+                    <p *ngIf="shortDescription.errors.required" class="text-danger">Short Description field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': status.touched && !status.valid}">
+              <label for="status" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Status</label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                <select [(ngModel)]="defaultStatus" class="form-control" id="status" name="status" #status="ngModel" required>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                </select>
+
+                <div class="pull-right " *ngIf="status.touched && !status.valid">
+                    <p *ngIf="status.errors.required" class="text-danger">Status field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': productStock.touched && !productStock.valid}">
+              <label for="productStock" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">Quantity in Stock: </label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                  <input 
+                      type="text" class="form-control" id="productStock" placeholder="Items in Stock"
+                      name="productStock" #productStock="ngModel" ngModel 
+                      maxlength="6" pattern="[0-9]">
+
+                  <div class="pull-right " *ngIf="productStock.touched && !productStock.valid">
+                      <p *ngIf="productStock.errors.pattern" class="text-danger">Stock must be a Number</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': couponStatus.touched && !couponStatus.valid}">
+              <label for="couponStatus" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Coupon Status</label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                <select [(ngModel)]="defaultcoupon" class="form-control" id="couponStatus" name="couponStatus" #couponStatus="ngModel" required>
+                    <option value="Applicable">Coupon Discount is Allowed</option>
+                    <option value="Notapplicable">Coupon Discount is Not Allowed</option>
+                </select>
+
+                <div class="pull-right " *ngIf="couponStatus.touched && !couponStatus.valid">
+                    <p *ngIf="couponStatus.errors.required" class="text-danger">Coupon Status field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="mark" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">Product Tag: </label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                  <select class="form-control" id="mark" name="mark" #mark="ngModel" ngModel>
+                      <option value="">No Tag</option>
+                      <option value="New">New</option>
+                      <option value="Best">Best</option>
+                      <option value="Popular">Popular</option>
+                      <option value="Best Price">Best Price</option>
+                      <option value="New Arrival">New Arrival</option>
+                      <option value="Assured">Assured</option>
+                      <option value="Best Deal">Best Deal</option>
+                      <option value="Best Selling">Best Selling</option>
+                      <option value="Best in Class">Best in Class</option>
+                      <option value="Exclusive">Exclusive</option>
+                  </select>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': productImage.touched && !productImage.valid}">
+                <label for="productImage" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">* Product Images: </label>
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <input 
+                        type="file" class="form-control" id="productImage" 
+                        name="productImage" #productImage="ngModel" ngModel 
+                        multiple="true" accept="image/*">
+
+                    <div class="pull-right " *ngIf="productImage.touched && !productImage.valid">
+                        <p *ngIf="productImage.errors.required" class="text-danger">Product Image field is required</p>
+                    </div>
+                </div>
+            </div>
+            
+
+          </div>
+        </div>  <!--> Set Div ends here </!-->
+      </div>  <!--> Col 6 ends here </!-->
+
+
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+        <div class="set">
+
+          <div class="box-head">
+              <h4>Product Category Mapping</h4>
+          </div>
+
+          <div class="edit row">
+
+            <div class="form-group row" *ngFor="let flt of filter">
+              <label for="productCategory-{{ flt.id }}" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">{{ flt.filterName }}</label>
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                <select 
+                    class="form-control" id="productCategory-{{ flt.id }}" 
+                    #productCategory[]="ngModel" ngModel name="productCategory_{{ flt.id }}" 
+                    required>
+
+                  <ng-container *ngFor="let cat of category">
+                    <option value="{{ cat.id }}" *ngIf="flt.filterName == cat.filterName">{{ cat.categoryName }}</option>
+                  </ng-container>
+                </select>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>  <!--> Col 6 ends here </!-->
+
+
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0;">
+        <div class="set">
+          <div class="box-head">
+              <h4>Product Description</h4>
+          </div>
+          
+          <div class="edit row">
+            
+            <div class="form-group row">
+              <label for="description" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Describe your product here: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+
+                <app-text-editor [elementId]="'product-desc'" (onEditorKeyup)="tinymcyFunction($event)"></app-text-editor>
+                <textarea 
+                  type="hidden" class="hidden" id="description"
+                  name="description" #description="ngModel" [(ngModel)]="tinymcyContent" 
+                  maxlength="25000" required></textarea>
+                <p class="pull-right">Max 8000 words only</p>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Save Product" contenteditable="false" [disabled]="!productForm.valid">
+                <a routerLink="/product" class="btn btn-primary">Back to List</a>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      </form>
+  </div>
+
+  <app-footer></app-footer>
+</div>

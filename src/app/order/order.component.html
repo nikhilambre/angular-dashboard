@@ -1,0 +1,54 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+
+    <div class="dash-wrap row">
+        <div class="set">
+            <div class="box-head">
+                <h4>Orders List</h4>
+            </div>
+            <div class="list row">
+                <div class="">
+                    <a routerLink="/order/create" class="btn btn-primary">Create Custom Order</a>
+                </div><br><br>
+
+                <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+                    <thead> 
+                        <tr> 
+                            <th>#</th> 
+                            <th>Order Code</th>
+                            <th>Name</th>
+                            <th>Cost</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Billing</th>
+                            <th>Created</th>
+                        </tr> 
+                    </thead> 
+                    <tbody> 
+                        <tr class="msg-record" *ngFor="let ord of order; let i=index">
+                            <td>{{ i+1 }}</td>
+                            <td><a routerLink='/order/detail/{{ ord.id }}'><strong>{{ ord.orderCode }}</strong></a></td>
+                            <td>{{ ord.orderName | titlecase }}</td>
+                            <td>{{ ord.orderCost }}</td>
+                            <td>{{ ord.productCode }}</td>
+                            <td class="" [ngClass]="{'text-success':ord.orderStatus == 'INPROGRESS', 
+                                                    'text-info':ord.orderStatus == 'SAVED',
+                                                    'text-warning':ord.orderStatus == 'REFUND',
+                                                    'text-default':ord.orderStatus == 'CANCEL',
+                                                    'text-danger':ord.orderStatus == 'REPLACE'}"><strong>{{ ord.orderStatus }}</strong></td>
+                            <td>{{ ord.billingStatus }}</td>
+                            <td>{{ ord.created_at | date:'short' }}</td>
+                        </tr>
+                    </tbody> 
+                </table></div>
+            </div>
+        </div>
+    </div>
+
+
+  <app-footer></app-footer>
+</div>

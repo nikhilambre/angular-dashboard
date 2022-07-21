@@ -1,0 +1,60 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="create row">
+
+        <div class="set">
+            <div class="box-head">
+                <h4>Add Product Option</h4>
+            </div>
+            <form class="edit row" (ngSubmit)="onCreateOption(optionForm.value)" #optionForm="ngForm">
+
+            <div class="form-group row" [ngClass]="{'has-error': optionName.touched && !optionName.valid}">
+                <label for="optionName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Option Name: </label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <input 
+                        type="text" class="form-control" id="optionName" placeholder="Option Title"
+                        ngModel name="optionName" #optionName="ngModel" 
+                        maxlength="40" required>
+
+                    <div class="pull-right " *ngIf="optionName.touched && !optionName.valid">
+                        <p *ngIf="optionName.errors.required" class="text-danger">Option Name field is required</p>
+                    </div>
+                </div>
+            </div>
+
+                <div class="form-group row" [ngClass]="{'has-error': optionStatus.touched && !optionStatus.valid}">
+                    <label for="optionStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Option Status:</label>
+                    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                        <select [(ngModel)]="defaultStatus" name="optionStatus" #optionStatus="ngModel" class="form-control" required>
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="INACTIVE">INACTIVE</option>
+                        </select>
+
+                        <div class="pull-right " *ngIf="optionStatus.touched && !optionStatus.valid">
+                            <p *ngIf="optionStatus.errors.required" class="text-danger">Option Status field is required</p>
+                        </div>
+                    </div>
+                </div>
+
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                    <input 
+                        type="submit" name="submit" class="btn btn-default" value="Create" 
+                        contenteditable="false" [disabled]="!optionForm.valid">
+                    <a routerLink="/product/option" class="btn btn-primary">Back to List</a>
+                </div>
+            </form>
+        </div>
+
+      </div>
+    
+    </div>
+
+    <app-footer></app-footer>
+</div>

@@ -1,0 +1,40 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Parent Category Details</h4>
+        </div>
+
+        <div class="show row" *ngFor="let par of parentcat">
+          
+          <div class="show-top row">
+            <a routerLink="/parentcat" class="btn btn-primary">View All</a>
+            <a routerLink="/parentcat/create" class="btn btn-primary">Add New</a>
+            <a routerLink="/parentcat/edit/{{ par.id }}" class="btn btn-primary">Edit</a>           
+          </div>
+
+          <div class="show-left col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Parent Category Description</h5></div>
+            <dl class="dl-horizontal">
+              <dt>Parent Category :</dt><dd>{{ par.parentCatName }}</dd>
+              <dt>Status :</dt><dd>{{ par.parentCatStatus }}</dd>
+              <dt>Created Date :</dt><dd>{{ par.created_at }}</dd>
+            </dl>
+          </div>
+
+          <div class="show-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>
+    

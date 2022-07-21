@@ -1,0 +1,62 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+            <h4>Add Options to Product</h4>
+          </div>
+          <form class="edit row" (ngSubmit)="onCreate(optionMap.value)" #optionMap="ngForm" >
+
+            <div class="form-group row">
+              <label for="productId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Product</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select class="form-control" id="productId" name="productId" #productId="ngModel" ngModel required>
+                  <option value="{{ prd.id }}" *ngFor="let prd of product">{{ prd.productName }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="optionId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Option</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select class="form-control" id="optionId" name="optionId" #optionId="ngModel" ngModel (change)="onOptionChange(optionId.value)" required>
+                  <option value="{{ opt.id }}" *ngFor="let opt of productoption">{{ opt.optionName }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="optionTypeId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Type of Option:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select ngModel name="optionTypeId" #optionTypeId="ngModel" class="form-control" required>
+                  <option value="{{ typ.id }}" *ngFor="let typ of productoptiontype">{{ typ.optionTypeName }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="typeStock" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*In Stock Products: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <input type="text" class="form-control" id="typeStock" name="typeStock" #typeStock="ngModel" ngModel required>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Create" contenteditable="false" [disabled]="!optionMap.valid">
+                <a routerLink="/product/optionmap" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

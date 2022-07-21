@@ -1,0 +1,237 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+
+    <div class="dash-wrap row">
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Add SEO</h4>
+          </div>
+          <form class="edit row" enctype="multipart/form-data" (ngSubmit)="onCreate(seoForm.value)" #seoForm="ngForm">
+
+            <div class="form-group row" [ngClass]="{'has-error': pageName.touched && !pageName.valid}">
+              <label for="pageName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Page: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <select class="form-control" id="pageName" name="pageName" #pageName="ngModel" ngModel required>
+                    <option *ngFor="let page of pages" value="{{ page.id }}">{{ page.pageName }}</option>
+                  </select>
+
+                  <div class="pull-right " *ngIf="pageName.touched && !pageName.valid">
+                      <p *ngIf="pageName.errors.required" class="text-danger">Page Name is required</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="seoStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Status</label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select [(ngModel)]="defaultStatus" class="form-control" id="seoStatus" name="seoStatus" #categoryStatus="ngModel" required>
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': title.touched && !title.valid}">
+              <label for="title" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Page Title: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="title" placeholder="Page Title"
+                        name="title" #title="ngModel" ngModel
+                        maxlength="60" required>
+
+                    <div class="pull-right" *ngIf="title.touched && !title.valid">
+                        <p *ngIf="title.errors.required" class="text-danger">Page Title field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': description.touched && !description.valid}">
+              <label for="description" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Description: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="description" placeholder="Description"
+                        name="description" #description="ngModel" ngModel
+                        maxlength="160" required>
+
+                    <div class="pull-right" *ngIf="description.touched && !description.valid">
+                        <p *ngIf="description.errors.required" class="text-danger">Description field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': keyword.touched && !keyword.valid}">
+              <label for="keyword" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Keyword: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="keyword" placeholder="keyword"
+                        name="keyword" #keyword="ngModel" ngModel
+                        maxlength="200" required>
+
+                    <div class="pull-right" *ngIf="keyword.touched && !keyword.valid">
+                        <p *ngIf="keyword.errors.required" class="text-danger">keyword field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="seoImage" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Open Graph Image: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                      type="file" class="form-control"  id="seoImage" 
+                      name="seoImage" #seoImage="ngModel" ngModel accept="image/*">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="twitterCardType" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Twitter Card Type: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <select ngModel class="form-control" id="twitterCardType" 
+                        name="twitterCardType" #twitterCardType="ngModel"
+                        (change)="onChange(twitterCardType.value)">
+                    <option value="summary_large_image">Summary Large Image</option>
+                    <option value="summary">Summary</option>
+                    <option value="app">App</option>
+                  </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="twitterSite" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter Site: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterSite" placeholder="twitter Site"
+                        name="twitterSite" #twitterSite="ngModel" ngModel
+                        maxlength="50">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'summary_large_image'">
+              <label for="twitterCreator" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter Creator: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterCreator" placeholder="twitter Creator"
+                        name="twitterCreator" #twitterCreator="ngModel" ngModel
+                        maxlength="50">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppCountry" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Country: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppCountry" placeholder="twitter App Country"
+                        name="twitterAppCountry" #twitterAppCountry="ngModel" ngModel
+                        maxlength="50">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppNameIphone" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Name Iphone: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppNameIphone" placeholder="twitter App Name Iphone"
+                        name="twitterAppNameIphone" #twitterAppNameIphone="ngModel" ngModel
+                        maxlength="50">
+              </div>
+            </div>
+            
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppIdIphone" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Id Iphone: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppIdIphone" placeholder="twitter App Id Iphone"
+                        name="twitterAppIdIphone" #twitterAppIdIphone="ngModel" ngModel
+                        maxlength="50">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppUrlIphone" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Url Iphone: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppUrlIphone" placeholder="twitter App Url Iphone"
+                        name="twitterAppUrlIphone" #twitterAppUrlIphone="ngModel" ngModel
+                        maxlength="100">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppNameIpad" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Name Ipad: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppNameIpad" placeholder="twitter App Name Ipad"
+                        name="twitterAppNameIpad" #twitterAppNameIpad="ngModel" ngModel
+                        maxlength="50">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppIdIpad" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Id Ipad: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppIdIpad" placeholder="twitter App Id Ipad"
+                        name="twitterAppIdIpad" #twitterAppIdIpad="ngModel" ngModel
+                        maxlength="50">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppUrlIpad" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Url Ipad: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppUrlIpad" placeholder="twitter App Url Ipad"
+                        name="twitterAppUrlIpad" #twitterAppUrlIpad="ngModel" ngModel
+                        maxlength="100">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppNameGoogleplay" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Name Googleplay: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppNameGoogleplay" placeholder="twitter App Name Googleplay"
+                        name="twitterAppNameGoogleplay" #twitterAppNameGoogleplay="ngModel" ngModel
+                        maxlength="50">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppIdGoogleplay" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Id Googleplay: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppIdGoogleplay" placeholder="twitter App Id Googleplay"
+                        name="twitterAppIdGoogleplay" #twitterAppIdGoogleplay="ngModel" ngModel
+                        maxlength="50">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="activeCard == 'app'">
+              <label for="twitterAppUrlGoogleplay" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">twitter App Url Googleplay: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="twitterAppUrlGoogleplay" placeholder="twitter App Url Googleplay"
+                        name="twitterAppUrlGoogleplay" #twitterAppUrlGoogleplay="ngModel" ngModel
+                        maxlength="100">
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" class="btn btn-default" value="Save" contenteditable="false" [disabled]="!seoForm.valid">
+                <a routerLink="/seo" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,33 @@
+<app-side-nav [pageHeaders]="pageHeaders"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+
+    <div class="dash-wrap row">
+
+      <div class="set">
+          <div class="box-head">
+              <h4>Help Question/Answer</h4>
+          </div>
+
+          <div class="show row">
+            <div class="show-top row">
+              <a routerLink="/help" class="btn btn-primary">Back to List</a>
+            </div>
+
+            <dl class="dl-horizontal" *ngFor="let he of help">
+              <dt>Question :</dt>
+                <dd>{{ he.helpQuestion | titlecase }}</dd>
+              <dt></dt><dd><hr></dd>
+              <dt class="">Answer : </dt>
+                <dd class="with-newlines" style="width: 50%">{{ he.helpAnswer }}</dd>
+            </dl>
+          </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

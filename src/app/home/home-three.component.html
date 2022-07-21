@@ -1,0 +1,75 @@
+<div class="create row">
+  <div class="set">
+    <div class="box-head">
+      <h4>Categoty &amp; Signup Stats</h4>
+    </div>
+
+    <div class="chart-box row">
+
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+        <div class="chart-show">
+          <h4 class="">Views <br>For Categories</h4>
+
+          <div class="chart-container">
+            <canvas id="myChart31"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+        <div class="chart-show">
+          <h4 class="">Comments <br>for Categories</h4>
+
+          <div class="chart-container">
+            <canvas id="myChart32"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+        <div class="week-stat week-stat-type2 row">
+          <div class="row">
+            <div class="left pull-left">
+              <p class="text">Weekly Signups</p>
+              <p class="val"><span class="fa fa-bullseye"></span> 23</p>
+            </div>
+            <div class="right pull-right">
+              <p class="perc" [ngClass]="signupperc > 0 ? 'rise' : 'fall'">
+                <i class="fa" [ngClass]="signupperc > 0 ? 'fa-angle-double-up' : 'fa-angle-double-down'"></i> 2%<br>
+              </p>
+            </div>
+          </div>
+          <div class="bottom row">
+            <p class="total">Total Signups<span> 520</span></p>
+          </div>
+        </div>
+
+        <div class="week-stat week-stat-type2 row">
+          <div class="row">
+            <div class="left pull-left">
+              <p class="text">Weekly Subscriptions</p>
+              <p class="val"><span class="fa fa-comments"></span> 21</p>
+            </div>
+            <div class="right pull-right">
+              <p class="perc" [ngClass]="subsperc > 0 ? 'rise' : 'fall'">
+                <i class="fa" [ngClass]="subsperc > 0 ? 'fa-angle-double-up' : 'fa-angle-double-down'"></i> 3%<br>
+              </p>
+            </div>
+          </div>
+          <div class="bottom row">
+            <p class="total">Total Subscribers<span> 189</span></p>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

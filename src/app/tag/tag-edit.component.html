@@ -1,0 +1,58 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+    <div class="dash-wrap row">
+
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="padding: 0;">
+
+        <div class="create row">
+          <div class="set">
+            <div class="box-head">
+              <h4>Update Tag</h4>
+            </div>
+        
+            <form class="edit row" (ngSubmit)="onUpdate(tagForm.value)" #tagForm="ngForm" *ngFor="let t of tag">
+
+              <div class="form-group row hidden">
+                <label for="exampleInputEmail1" class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input type="hidden" class="form-control" maxlength="20" name="id" #id="ngModel" [(ngModel)]="t.id">
+                </div>
+              </div>
+        
+              <div class="form-group row" [ngClass]="{'has-error': tagName.touched && !tagName.valid}">
+                <label for="tagName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Tag Name: </label>
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                    <input 
+                        type="text" class="form-control" id="tagName" placeholder="Tag Name"
+                        name="tagName" #tagName="ngModel" [(ngModel)]="t.tagName"
+                        maxlength="40" required>
+        
+                    <div class="pull-right " *ngIf="tagName.touched && !tagName.valid">
+                        <p *ngIf="tagName.errors.required" class="text-danger">Tag Name field is required</p>
+                    </div>
+                </div>
+              </div>
+        
+              <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                  <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false" [disabled]="!tagForm.valid">
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <app-tag-list></app-tag-list>
+      </div>
+
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+        <app-tag-map></app-tag-map>
+      </div>
+
+    </div>
+  <app-footer></app-footer>
+</div>
+            

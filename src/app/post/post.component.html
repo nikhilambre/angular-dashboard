@@ -1,0 +1,53 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+
+    <div class="dash-wrap row">
+
+      <div class="set">
+          <div class="box-head">
+              <h4>Post List</h4>
+          </div>
+          <div class="list row">
+              <div class="">
+                <a routerLink="/post/create" class="btn btn-primary">Add New</a>
+              </div><br><br>
+
+              <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+                <thead> 
+                    <tr> 
+                        <th>#</th> 
+                        <th>Title</th> 
+                        <th>Category</th>
+                        <th>Author</th>
+                        <th>Status</th>
+                        <th>Views</th>
+                        <th>Create date</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr> 
+                </thead> 
+                <tbody>
+                  <tr class="msg-record" *ngFor="let pos of post; let i=index">
+                      <td>{{ i+1 }}</td>
+                      <td><a routerLink='/post/view/{{ pos.id }}'>{{ pos.postTitle | titlecase }}</a></td>
+                      <td>{{ pos.categoryName | titlecase }}</td>
+                      <td><a routerLink='/author/view/{{ pos.authorId }}'>{{ pos.authorName | titlecase }}</a></td>
+                      <td>{{ pos.postStatus }}</td>
+                      <td>{{ pos.view }}</td>
+                      <td>{{ pos.created_at | date:'short' }}</td>
+                      <td><a routerLink='/post/edit/{{ pos.id }}' class=""><i class="fa fa-edit"></i></a></td>
+                      <td><span (click)="onDelete(pos)" class="btn-trash"><i class="fa fa-trash"></i></span></td>
+                  </tr>
+                </tbody> 
+            </table></div>
+          </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

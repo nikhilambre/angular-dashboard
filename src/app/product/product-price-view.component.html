@@ -1,0 +1,45 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Product Price Details</h4>
+        </div>
+
+        <div class="show row" *ngFor="let pri of productprice">
+          
+          <div class="show-top row">
+            <a routerLink="/product/price" class="btn btn-primary">View All</a>
+            <a routerLink="/product/price/create" class="btn btn-primary">Add New</a>
+            <a routerLink="/product/price/edit/{{ pri.id }}" class="btn btn-primary">Edit</a>           
+          </div>
+
+          <div class="show-left col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Price Details</h5></div>
+            <dl class="dl-horizontal" >
+              <dt>Currency :</dt><dd><strong>{{ pri.currency }}</strong></dd>
+              <dt>Product Id :</dt><dd>{{ pri.productDisplayId }}</dd>
+              <dt>ProductName :</dt><dd>{{ pri.productName }}</dd>
+              <dt>Price :</dt><dd>{{ pri.price }}</dd>
+              <dt>Price For Quantity :</dt><dd>/{{ pri.priceForQnt }}</dd>
+              <dt>% Discount :</dt><dd>{{ pri.discount }}</dd>
+              <dt>Tax Category :</dt><dd>{{ pri.taxCategory }}</dd>
+              <dt>% Tax :</dt><dd>{{ pri.taxRate }}</dd>
+              <dt>Final Price :</dt><dd>{{ pri.finalPrice }}</dd>
+              <dt>Created Date :</dt><dd>{{ pri.created_at }}</dd>
+            </dl>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  <app-footer></app-footer>
+</div>
+    

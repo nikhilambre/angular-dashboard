@@ -1,0 +1,40 @@
+<div class="create row">
+    <div class="set">
+      <div class="box-head">
+        <h4>Add Tags to Post</h4>
+      </div>
+  
+      <form class="edit row" (ngSubmit)="onCreate(taglistForm.value)" #taglistForm="ngForm" >
+  
+        <div class="form-group row" [ngClass]="{'has-error': postId.touched && !postId.valid}">
+          <label for="postId" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Posts: </label>
+          <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+              <select class="form-control" id="postId" name="postId" #postId="ngModel" ngModel (change)="onPostChange(postId.value)" required>
+                <option value="{{ prd.id }}" *ngFor="let prd of post">{{ prd.postTitle }}</option>
+              </select>
+
+              <div class="pull-right" *ngIf="postId.touched && !postId.valid">
+                  <p *ngIf="postId.errors.required" class="text-danger">Post Title field is required</p>
+              </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+          <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+            <div class="check" *ngFor="let t of tag">
+                <input type="checkbox" id="tagmap-{{ t.id }}" name="tagId[]" value="{{ t.id }}" (change)="onCheckBox(t.id, $event)" [attr.checked]="isChecked[t.id] ? 'checked' : null">
+                <label for="tagmap-{{ t.id }}"></label>
+                <span>{{ t.tagName }}</span>
+            </div>
+          </div>
+        </div>
+  
+        <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+            <input type="submit" name="submit" class="btn btn-default" value="Update Tags" contenteditable="false" [disabled]="!taglistForm.valid">
+        </div>
+      </form>
+
+    </div>
+  </div>

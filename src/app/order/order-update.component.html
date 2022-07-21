@@ -1,0 +1,117 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+  
+
+    <div class="dash-wrap row">
+
+      <div class="create row" >
+        <div class="set">
+          <div class="box-head">
+            <h4>Order Status Update</h4>
+          </div>
+
+          <app-order-tabs [linkId]="linkId"></app-order-tabs>
+          <br>
+
+          <form class="edit row" (ngSubmit)="onUpdate(orderForm.value)" #orderForm="ngForm" *ngFor="let ord of order">
+
+            <div class="form-group row hidden">
+              <label for="id" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">*Id: </label>
+              <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                  <input type="hidden" class="form-control" id="id" name="id" #id="ngModel" [(ngModel)]="ord.id" maxlength="50" required>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="orderStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Order Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select name="orderStatus" #orderStatus="ngModel" [(ngModel)]="ord.orderStatus" class="form-control">
+                  <option value="SAVED">SAVED</option>
+                  <option value="INPROGRESS">INPROGRESS</option>
+                  <option value="COMPLETED">COMPLETED</option>
+                  <option value="CANCEL">CANCEL</option>
+                  <option value="REPLACE">REPLACE</option>
+                  <option value="REFUND">REFUND</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="billingStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Billing Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select name="billingStatus" #billingStatus="ngModel" [(ngModel)]="ord.billingStatus" class="form-control">
+                  <option value="UNPAID">UNPAID</option>
+                  <option value="PAID">PAID</option>
+                  <option value="REFUNDED">REFUNDED</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="deliveryStatus" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Delivery Status:</label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <select name="deliveryStatus" #deliveryStatus="ngModel" [(ngModel)]="ord.deliveryStatus" class="form-control">
+                  <option value="N/A">N/A</option>
+                  <option value="INITIATED">INITIATED</option>
+                  <option value="DISPATCH">DISPATCH</option>
+                  <option value="DELIVERED">DELIVERED</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="orderData1" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Order Data 1: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                      type="textarea" rows="5" class="form-control" id="orderData1" 
+                      name="orderData1" #orderData1="ngModel" [(ngModel)]="ord.orderData1" 
+                      maxlength="400" ></textarea>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="orderData2" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Order Data 2: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                      type="textarea" rows="5" class="form-control" id="orderData2" 
+                      name="orderData2" #orderData2="ngModel" [(ngModel)]="ord.orderData2" 
+                      maxlength="400" disabled></textarea>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="orderData3" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Order Data 3: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                      type="textarea" rows="5" class="form-control" id="orderData3" 
+                      name="orderData3" #orderData3="ngModel" [(ngModel)]="ord.orderData3" 
+                      maxlength="800" disabled></textarea>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="orderData4" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">Order Data 4: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                      type="textarea" rows="5" class="form-control" id="orderData4" 
+                      name="orderData4" #orderData4="ngModel" [(ngModel)]="ord.orderData4" 
+                      maxlength="800" disabled></textarea>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><hr>
+                <input type="submit" name="submit" class="btn btn-default" value="Update" contenteditable="false"  [disabled]="!orderForm.valid">
+                <a routerLink="/order" class="btn btn-primary">Back to Orders</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,47 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Order Address</h4>
+        </div>
+        
+        <app-order-tabs [linkId]="linkId"></app-order-tabs>
+        <hr>
+
+        <div class="" *ngFor="let ord of orderaddress">
+
+          <div class="grid2 col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="grid-left">Address Type:</div>
+            <div class="grid-right">{{ ord.addrType }}</div>
+  
+            <div class="grid-left">Address:</div>
+            <div class="grid-right">{{ ord.addrText }}</div>
+
+            <div class="grid-left">City:</div>
+            <div class="grid-right">{{ ord.addrCity }}</div>
+  
+            <div class="grid-left">State:</div>
+            <div class="grid-right">{{ ord.addrState }}</div>
+
+            <div class="grid-left">Country:</div>
+            <div class="grid-right">{{ ord.addrCountry }}</div>
+  
+            <div class="grid-left">Pincode:</div>
+            <div class="grid-right">{{ ord.addrPincode }}</div>
+
+            <div class="grid-left">Chat Address:</div>
+            <div class="grid-right">{{ ord.addrChat }}</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  <app-footer></app-footer>
+</div>

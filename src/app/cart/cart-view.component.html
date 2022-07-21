@@ -1,0 +1,42 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+
+      <div class="set row">
+        <div class="box-head">
+          <h4>Cart Details</h4>
+        </div>
+
+        <div class="show row">
+          
+          <div class="show-top row">
+            <a routerLink="/order-cart" class="btn btn-primary">View All</a>
+            <a routerLink="/order-cart/edit/{{ cartId }}" class="btn btn-primary">Edit</a>
+          </div>
+
+          <div class="show-left col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div><h5>Cart Details</h5></div>
+            <dl class="dl-horizontal" *ngFor="let car of cart">
+              <dt>Product Name :</dt><dd><a routerLink='/product/view/{{ car.productId }}'>{{ car.productName }}</a></dd>
+              <dt>Product Cost :</dt><dd><i class="fa fa-{{ car.currency }}"></i> {{ car.productCost }}</dd>
+              <dt>Quantity :</dt><dd>{{ car.quantity }}</dd>
+              <dt>Coupon Code :</dt><dd>{{ car.couponCode }}</dd>
+              <dt>Customer Name :</dt><dd><a routerLink='/visitor/view/{{ car.customerId }}'>{{ car.name }} {{ car.lastname }}</a></dd>
+              <dt>Cart Status :</dt><dd>{{ car.status }}</dd>
+              <dt>Cart Delivery Status :</dt><dd>{{ car.deliveryStatus }}</dd>
+              <dt>Created Date :</dt><dd>{{ car.created_at }}</dd>
+            </dl>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  <app-footer></app-footer>
+</div>
+    

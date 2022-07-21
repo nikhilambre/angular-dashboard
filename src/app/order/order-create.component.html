@@ -1,0 +1,88 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+
+    <div class="dash-wrap row">
+      <app-processing [process]="process"></app-processing>
+
+      <div class="create row">
+        <div class="set">
+          <div class="box-head">
+              <h4>Create Custom Order</h4>
+          </div>
+          <form class="edit row" enctype="multipart/form-data" (ngSubmit)="onCreate(orderForm.value)" #orderForm="ngForm">
+
+            <div class="form-group row" [ngClass]="{'has-error': orderName.touched && !orderName.valid}">
+              <label for="orderName" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Customer Name: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="orderName" placeholder="Customer's Name"
+                        name="orderName" #orderName="ngModel" ngModel
+                        maxlength="60" required>
+
+                    <div class="pull-right" *ngIf="orderName.touched && !orderName.valid">
+                        <p *ngIf="orderName.errors.required" class="text-danger">Customer Name field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': orderCurrency.touched && !orderCurrency.valid}">
+                <label for="orderCurrency" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Order Currency: </label>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <select ngModel class="form-control" id="orderCurrency" name="orderCurrency" #orderCurrency="ngModel" required>
+                        <option value="INR">INR</option>
+                        <option value="USD">USD</option>
+                        <option value="GBP">GBP</option>
+                        <option value="EUR">EUR</option>
+                    </select>
+
+                    <div class="pull-right " *ngIf="orderCurrency.touched && !orderCurrency.valid">
+                        <p *ngIf="orderCurrency.errors.required" class="text-danger">filter field is required</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': orderCost.touched && !orderCost.valid}">
+              <label for="orderCost" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Cost: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <input 
+                        type="text" class="form-control" id="orderCost" placeholder="Order Cost"
+                        name="orderCost" #orderCost="ngModel" ngModel
+                        maxlength="60" required>
+
+                    <div class="pull-right" *ngIf="orderCost.touched && !orderCost.valid">
+                        <p *ngIf="orderCost.errors.required" class="text-danger">Cost field is required</p>
+                    </div>
+              </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{'has-error': orderDescription.touched && !orderDescription.valid}">
+              <label for="orderDescription" class="col-xs-12 col-sm-2 col-md-2 col-lg-2">* Description: </label>
+              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                  <textarea 
+                        type="textarea" class="form-control" id="orderDescription" rows="6" placeholder="Category Description (Max 1600 characters)"
+                        name="orderDescription" #orderDescription="ngModel" ngModel 
+                        maxlength="1600" required></textarea>
+
+                  <div class="pull-right " *ngIf="orderDescription.touched && !orderDescription.valid">
+                    <p *ngIf="orderDescription.errors.required" class="text-danger">Description field is required</p>
+                </div>
+              </div>
+            </div>
+
+            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2">&nbsp;</label>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                <hr>
+                <input type="submit" class="btn btn-default" value="Save" contenteditable="false" [disabled]="!orderForm.valid">
+                <a routerLink="/order" class="btn btn-primary">Back to List</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>

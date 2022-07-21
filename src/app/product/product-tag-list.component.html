@@ -1,0 +1,27 @@
+<div class="set">
+  <div class="box-head">
+      <h4>Tags List</h4>
+  </div>
+  <div class="list row">
+      <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+          <thead> 
+              <tr> 
+                  <th>#</th> 
+                  <th>Tag Name</th>
+                  <th>Create Date</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+              </tr> 
+          </thead> 
+          <tbody> 
+              <tr class="msg-record" *ngFor="let tag of producttag; let i=index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ tag.tagName | titlecase }}</td>
+                  <td>{{ tag.created_at | date:'short' }}</td>
+                  <td><a routerLink='/tag/edit/{{ tag.id }}' class=""><i class="fa fa-edit"></i></a></td>
+                  <td><span (click)="onDelete(tag)" class=""><i class="fa fa-trash"></i></span></td>
+              </tr>
+          </tbody> 
+      </table></div>
+  </div>
+</div>

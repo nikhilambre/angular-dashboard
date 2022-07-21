@@ -1,0 +1,41 @@
+<app-side-nav [pageHeaders]="pageHeaders" class="hidden-xs"></app-side-nav> <app-side-nav [pageHeaders]="pageHeaders" class="visible-xs" *ngIf="sidebarOpen"></app-side-nav>
+<div class="page-wrap">
+  <app-top-nav [pageHeaders]="pageHeaders" (open)="sidebarStateChange()"></app-top-nav>
+
+    <app-top-header [pageHeaders]="pageHeaders"></app-top-header>
+    <app-processing [process]="process"></app-processing>
+    
+    <div class="dash-wrap row">
+
+      <div class="set">
+          <div class="box-head">
+              <h4>Subscribers List</h4>
+          </div>
+          <div class="list row">
+              <div class="table-responsive"><table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> 
+                  <thead> 
+                      <tr> 
+                          <th>#</th>
+                          <th>Email</th>
+                          <th>Name</th>
+                          <th>Create date</th>
+                          <th>Delete</th>
+                      </tr> 
+                  </thead> 
+                  <tbody>
+                    <tr class="msg-record" *ngFor="let sub of subscriber; let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ sub.email }}</td>
+                        <td><a routerLink='/visitor/view/{{ sub.customerId }}'>{{ sub.name }}</a></td>
+                        <td>{{ sub.created_at | date:'short' }}</td>
+                        <td><span (click)="onDelete(sub)" class="btn-trash"><i class="fa fa-trash"></i></span></td>
+                    </tr>
+                  </tbody> 
+              </table></div>
+          </div>
+      </div>
+
+    </div>
+
+  <app-footer></app-footer>
+</div>
